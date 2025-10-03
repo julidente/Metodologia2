@@ -1,9 +1,10 @@
+# Tema: Sistema web de gestion de destinos turisticos
+
 ## Participantes del proyecto
    - Julian Dentezano
 -  Franco Panzone
 -  Jeremias Atala
 -  Manuel Axel Rozas Soria
-## tema: Sistema web de gestion de destinos turisticos
 
 ## Descripción del Proyecto: 
 
@@ -22,18 +23,18 @@ Este proyecto tiene como objetivo desarrollar una página web turística dedicad
 
 Esta estructura busca asegurar un desarrollo limpio, escalable y mantenible, con énfasis en la calidad del código y la correcta separación de responsabilidades.
 
-## patrones de diseño utilizados
+## Patrones de diseño utilizados
 
 Para garantizar un diseño de software robusto, escalable y mantenible, se implementarán diversos patrones de diseño que permiten separar responsabilidades, facilitar la reutilización de código y mejorar la testeabilidad del sistema. A continuación, se detallan los principales patrones que se aplicarán:
 
-- Builder Pattern
+### Builder Pattern
 
 Aplicación: Creación de actividades turísticas
-Este patrón es ideal para la creación de objetos complejos paso a paso, como las actividades turísticas, que pueden tener múltiples propiedades opcionales (descripción, ubicación, imágenes, precio, descuentos, etc.). 
+Este patrón es ideal para la creación de objetos complejos paso a paso, como las actividades turísticas, que pueden tener múltiples propiedades opcionales (descripción, imágenes, precio, descuentos, etc.). 
 
 Permite construir instancias de manera flexible y clara, evitando constructores con demasiados parámetros.
 
-- Singleton Pattern
+### Singleton Pattern
 
 Aplicación: Conexión a la base de datos PostgreSQL
 
@@ -41,25 +42,24 @@ Se utilizará este patrón para garantizar que exista una única instancia de la
 
 Esto mejora el rendimiento, evita múltiples conexiones innecesarias y asegura consistencia en las operaciones de acceso a datos.
 
-- Observer Pattern
+### Observer Pattern
  
-se usaria devido a que:
-si hay alguna modificación (ej : descuento), todos los clientes suscritos a esa actividad se le mandarian la notificacion correspondiente.
+Se usaria devido a que:
+Si hay alguna modificación (ej : descuento), todos los clientes suscritos a esa actividad se le mandarian la notificacion correspondiente.
 
 Tabla suscripción => 
 	Id_cliente
 	Id_actividad (Publisher retiene la información de quien esta suscripto)
 
-Este sería innecesario
-Aplicación: Comentarios y reseñas en tiempo real (WebSockets con Socket.IO)
-
-Cuando un usuario publica una nueva reseña o comentario sobre una actividad, otros usuarios que estén visualizando esa sección deben recibir esta actualización sin necesidad de recargar la página. 
-
 El patrón Observer se adapta perfectamente a este escenario, ya que permite que los "observadores" (clientes) se suscriban a eventos y sean notificados automáticamente de los cambios.
 
 Tecnología utilizada: Socket.IO en Node.js para implementar comunicación bidireccional y eventos en tiempo real de forma eficiente.
 
-- Strategy Pattern
+**Feature descartado: Comentarios y reseñas en tiempo real (WebSockets con Socket.IO)** 
+
+Cuando un usuario publica una nueva reseña o comentario sobre una actividad, otros usuarios que estén visualizando esa sección deben recibir esta actualización sin necesidad de recargar la página. 
+
+### Strategy Pattern
 
 Aplicación: Ordenamiento flexible de actividades
 
