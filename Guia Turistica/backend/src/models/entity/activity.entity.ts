@@ -1,0 +1,103 @@
+// src/models/entity/activity.entity.ts
+/* import { DataTypes, Model } from "sequelize";
+import { sequelize } from "../../config/database.config";
+import { City } from "./city.entity";
+import { Category } from "./category.entity";
+import { Image } from "./image.entity"; // suponer que luego creamos
+import { Subscription } from "./subscription.entity"; // suponer que luego creamos
+
+export class Activity extends Model {
+  public activity_id!: number;
+  public name!: string;
+  public description!: string;
+  public price!: number;
+  public discount!: number;
+  public rating!: number;
+  public location!: string;
+  public category_id!: number;
+  public city_id!: number;
+}
+
+Activity.init(
+  {
+    activity_id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    price: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+    },
+    discount: {
+      type: DataTypes.FLOAT,
+      allowNull: true,
+      defaultValue: 0,
+    },
+    rating: {
+      type: DataTypes.FLOAT,
+      allowNull: true,
+      defaultValue: 0,
+    },
+    location: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    category_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    city_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+  },
+  {
+    sequelize,
+    tableName: "Activities",
+    timestamps: true,
+  }
+);
+
+// Relaciones
+Activity.belongsTo(City, { foreignKey: "city_id", as: "city" });
+Activity.belongsTo(Category, { foreignKey: "category_id", as: "category" });
+Activity.hasMany(Image, { foreignKey: "activity_id", as: "images" });
+Activity.hasMany(Subscription, { foreignKey: "activity_id", as: "subscriptions" }); */
+
+// src/models/entity/activity.entity.ts
+import { DataTypes, Model } from "sequelize";
+import { sequelize } from "../../config/database.config";
+
+export class Activity extends Model {
+  public activity_id!: number;
+  public name!: string;
+  public description!: string;
+  public price!: number;
+  public discount!: number;
+  public location!: string;
+  public category_id!: number;
+  public city_id!: number;
+}
+
+Activity.init(
+  {
+    activity_id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    name: { type: DataTypes.STRING, allowNull: false },
+    description: { type: DataTypes.TEXT, allowNull: true },
+    price: { type: DataTypes.FLOAT, allowNull: false },
+    discount: { type: DataTypes.FLOAT, allowNull: true, defaultValue: 0 },
+    location: { type: DataTypes.STRING, allowNull: false },
+    category_id: { type: DataTypes.INTEGER, allowNull: false },
+    city_id: { type: DataTypes.INTEGER, allowNull: false },
+  },
+  { sequelize, tableName: "Activities", timestamps: true }
+);
