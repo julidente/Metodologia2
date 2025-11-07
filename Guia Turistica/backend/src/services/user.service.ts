@@ -13,6 +13,10 @@ export class UserService {
     return user;
   }
 
+  async getByEmail(email: string) {
+    return await userRepository.getByEmail(email);
+  }
+
   async create(data: { name: string; email: string; password: string }) {
     const existing = await userRepository.getByEmail(data.email);
     if (existing) throw new Error("El email ya está registrado");

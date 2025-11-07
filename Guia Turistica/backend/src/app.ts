@@ -8,7 +8,7 @@ import categoryRoutes from './routes/category.routes';
 import activitiesRoutes from './routes/activity.routes';
 import userRoutes from './routes/user.routes';
 import imagesRoutes from './routes/image.routes';
-//import authRoutes from './routes/auth.routes';
+import authRoutes from './routes/auth.routes';
 //import errorMiddleware from './middlewares/error.middleware.js';
 
 const app = express();
@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //app.use('/api/users', userRoutes);
-//app.use('/api/auth', authRoutes);
+app.use('/api/auth', authRoutes);
 app.use('/api/cities', cityRoutes);
 app.use('/api/provinces', provinceRoutes)
 app.use('/api/categories', categoryRoutes)
