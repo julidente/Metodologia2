@@ -13,7 +13,7 @@ module.exports = {
       {
         name: 'Administrador',
         email: 'admin@example.com',
-        password_hash: '$2a$10$IXOCTjN19Cmw1fPBwytvl.xWxFukyFrFDSoI.lUjVAdkwIyqp9DpW', // hash fijo
+        password_hash: '$2b$10$iVCvu9o7qTrQzd8g5/NR3e/YhTxiTNygOT.yFDcph6Bch4wVd4hrO', // hash fijo
         createdAt: new Date(),
         updatedAt: new Date()
       }
