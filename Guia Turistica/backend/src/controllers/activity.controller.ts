@@ -14,6 +14,31 @@ class ActivityController {
     }
   }
 
+  // sin sort secuencial
+  // async getAllSorted(req: Request, res: Response) {
+  //   try {
+  //     const sortKey = req.query.sort as string | undefined; // ej: "priceAsc", "name", etc.
+  //     const activities = await activityService.getAllSorted(sortKey);
+  //     res.json(activities);
+  //   } catch (error: any) {
+  //     res.status(500).json({ message: error.message });
+  //   }
+  // }
+
+  // con sort secuencial
+   async getAllSorted(req: Request, res: Response) {
+    try {
+      // Recibe múltiples criterios separados por coma
+      const sortQuery = req.query.sort as string | undefined;
+      const sortKeys = sortQuery ? sortQuery.split(",") : [];
+
+      const activities = await activityService.getAllSorted(sortKeys);
+      res.json(activities);
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+
   async getById(req: Request, res: Response) {
     try {
       const { id } = req.params;

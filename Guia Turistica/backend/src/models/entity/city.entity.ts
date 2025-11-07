@@ -77,11 +77,18 @@ Province.hasMany(City, { foreignKey: "province_id", as: "cities" }); */
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../../config/database.config";
 import { ICity } from "../city.model";
+import { Province } from "./province.entity";
 
 export class City extends Model {
   public city_id!: number;
   public name!: string;
   public province_id!: number;
+
+  // -------------------
+  // Asociaciones
+  // -------------------
+  public province?: Province; //opcional (para el strategy)
+
 }
 
 // export class City extends Model<ICity> implements ICity {
