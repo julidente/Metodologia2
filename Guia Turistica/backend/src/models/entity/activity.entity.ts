@@ -76,6 +76,9 @@ Activity.hasMany(Subscription, { foreignKey: "activity_id", as: "subscriptions" 
 // src/models/entity/activity.entity.ts
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../../config/database.config";
+// para los strategy necesito asociaciones con city y category, requiero las entidades
+import { City } from "./city.entity";
+import { Category } from "./category.entity";
 
 export class Activity extends Model {
   public activity_id!: number;
@@ -86,6 +89,12 @@ export class Activity extends Model {
   public location!: string;
   public category_id!: number;
   public city_id!: number;
+
+  // -------------------
+  // Asociaciones
+  // -------------------
+  public city?: City;          // opcional porque puede no venir
+  public category?: Category;  // opcional
 }
 
 Activity.init(
