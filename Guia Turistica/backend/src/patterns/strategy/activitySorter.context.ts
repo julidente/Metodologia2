@@ -1,6 +1,6 @@
 // src/patterns/strategy/activitySorter.context.ts
-import { Activity } from "../../models/entity/activity.entity";
-import { ISortStrategy } from "./sortStrategy.interface";
+import { Activity } from '../../models/entity/activity.entity';
+import { ISortStrategy } from './sortStrategy.interface';
 
 export class ActivitySorter {
   private strategy: ISortStrategy;

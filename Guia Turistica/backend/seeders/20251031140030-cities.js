@@ -106,13 +106,15 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     // Primero obtenemos todas las provincias
     const provinces = await queryInterface.sequelize.query(
-      `SELECT province_id, name FROM "Provinces";`
+      `SELECT province_id, name FROM "Provinces";`,
     );
     const provinceRows = provinces[0];
 
     // Mapeo de nombre de provincia a su id
     const provinceMap = {};
-    provinceRows.forEach(p => { provinceMap[p.name] = p.province_id });
+    provinceRows.forEach((p) => {
+      provinceMap[p.name] = p.province_id;
+    });
 
     const cities = [
       { name: 'Buenos Aires', province: 'Buenos Aires' },
@@ -182,11 +184,11 @@ module.exports = {
       { name: 'CABA', province: 'Ciudad Autónoma de Buenos Aires' },
     ];
 
-    const cityObjects = cities.map(c => ({
+    const cityObjects = cities.map((c) => ({
       name: c.name,
       province_id: provinceMap[c.province],
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
     }));
 
     return queryInterface.bulkInsert('Cities', cityObjects, {});
@@ -194,7 +196,5 @@ module.exports = {
 
   async down(queryInterface, Sequelize) {
     return queryInterface.bulkDelete('Cities', null, {});
-  }
+  },
 };
-
-

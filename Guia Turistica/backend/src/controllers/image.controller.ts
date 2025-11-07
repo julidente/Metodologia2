@@ -1,5 +1,5 @@
-import { Request, Response } from "express";
-import imageService from "../services/image.service";
+import { Request, Response } from 'express';
+import imageService from '../services/image.service';
 
 class ImageController {
   async getAll(req: Request, res: Response) {
@@ -25,7 +25,7 @@ class ImageController {
   async create(req: Request, res: Response) {
     try {
       const { activity_id } = req.body;
-      if (!req.file) return res.status(400).json({ message: "Archivo no recibido" });
+      if (!req.file) return res.status(400).json({ message: 'Archivo no recibido' });
 
       const image = await imageService.create(req.file.path, Number(activity_id));
       res.status(201).json(image);
@@ -35,15 +35,15 @@ class ImageController {
   }
 
   // con url de la imagen en base de datos
-//   async create(req: Request, res: Response) {
-//     try {
-//       const { url, activity_id } = req.body;
-//       const image = await imageService.create({ url, activity_id });
-//       res.status(201).json(image);
-//     } catch (error: any) {
-//       res.status(400).json({ message: error.message });
-//     }
-//   }
+  //   async create(req: Request, res: Response) {
+  //     try {
+  //       const { url, activity_id } = req.body;
+  //       const image = await imageService.create({ url, activity_id });
+  //       res.status(201).json(image);
+  //     } catch (error: any) {
+  //       res.status(400).json({ message: error.message });
+  //     }
+  //   }
 
   async update(req: Request, res: Response) {
     try {
@@ -59,7 +59,7 @@ class ImageController {
     try {
       const { id } = req.params;
       await imageService.delete(Number(id));
-      res.json({ message: "Imagen eliminada correctamente" });
+      res.json({ message: 'Imagen eliminada correctamente' });
     } catch (error: any) {
       res.status(404).json({ message: error.message });
     }

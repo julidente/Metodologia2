@@ -31,4 +31,3 @@ module.exports = {
     await queryInterface.dropTable('Provinces');
   },
 };
-

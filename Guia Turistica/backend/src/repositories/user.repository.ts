@@ -1,13 +1,13 @@
 // src/repositories/user.repository.ts
-import { User } from "../models/entity/user.entity";
+import { User } from '../models/entity/user.entity';
 
 export class UserRepository {
   async getAll() {
-    return await User.findAll({ attributes: ["user_id", "name", "email"] });
+    return await User.findAll({ attributes: ['user_id', 'name', 'email'] });
   }
 
   async getById(user_id: number) {
-    return await User.findByPk(user_id, { attributes: ["user_id", "name", "email"] });
+    return await User.findByPk(user_id, { attributes: ['user_id', 'name', 'email'] });
   }
 
   async getByEmail(email: string) {

@@ -37,5 +37,3 @@ export class CityService {
 }
 
 export default new CityService();
-
-

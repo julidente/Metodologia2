@@ -66,61 +66,60 @@ export class ActivityBuilder {
   }
 } */
 
-
 // src/patterns/builder/activity.builder.ts
-import { CreateActivityDTO } from "../../dtos/activity.dto";
+import { CreateActivityDTO } from '../../dtos/activity.dto';
 
 export class ActivityBuilder {
-    private data: Partial<CreateActivityDTO> = {};
+  private data: Partial<CreateActivityDTO> = {};
 
-    setName(name: string) {
-        this.data.name = name;
-        return this;
-    }
+  setName(name: string) {
+    this.data.name = name;
+    return this;
+  }
 
-    setDescription(description: string) {
-        this.data.description = description;
-        return this;
-    }
+  setDescription(description: string) {
+    this.data.description = description;
+    return this;
+  }
 
-    setPrice(price: number) {
-        this.data.price = price;
-        return this;
-    }
+  setPrice(price: number) {
+    this.data.price = price;
+    return this;
+  }
 
-    setDiscount(discount: number) {
-        this.data.discount = discount;
-        return this;
-    }
+  setDiscount(discount: number) {
+    this.data.discount = discount;
+    return this;
+  }
 
-    setLocation(location: string) {
-        this.data.location = location;
-        return this;
-    }
+  setLocation(location: string) {
+    this.data.location = location;
+    return this;
+  }
 
-    setCityId(city_id: number) {
-        this.data.city_id = city_id;
-        return this;
-    }
+  setCityId(city_id: number) {
+    this.data.city_id = city_id;
+    return this;
+  }
 
-    setCategoryId(category_id: number) {
-        this.data.category_id = category_id;
-        return this;
-    }
+  setCategoryId(category_id: number) {
+    this.data.category_id = category_id;
+    return this;
+  }
 
-    /**
-     * Devuelve los datos tal como están, aunque estén incompletos.
-     */
-    // no creo que sea necesario
-    //   buildPartial(): Partial<CreateActivityDTO> {
-    //     return { ...this.data };
-    //   }
+  /**
+   * Devuelve los datos tal como están, aunque estén incompletos.
+   */
+  // no creo que sea necesario
+  //   buildPartial(): Partial<CreateActivityDTO> {
+  //     return { ...this.data };
+  //   }
 
-    /**
-     * Devuelve el objeto listo para crear una Activity completa.
-     * No valida (ya lo hace el middleware).
-     */
-    build(): CreateActivityDTO {
-        return this.data as CreateActivityDTO;
-    }
+  /**
+   * Devuelve el objeto listo para crear una Activity completa.
+   * No valida (ya lo hace el middleware).
+   */
+  build(): CreateActivityDTO {
+    return this.data as CreateActivityDTO;
+  }
 }

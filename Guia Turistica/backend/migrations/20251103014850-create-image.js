@@ -7,37 +7,36 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       url: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
       },
       activity_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'Activities', // Tabla Activities
-          key: 'activity_id'
+          key: 'activity_id',
         },
         onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
+        onDelete: 'CASCADE',
       },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('NOW()')
+        defaultValue: Sequelize.literal('NOW()'),
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('NOW()')
-      }
+        defaultValue: Sequelize.literal('NOW()'),
+      },
     });
   },
 
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Images');
-  }
+  },
 };
-

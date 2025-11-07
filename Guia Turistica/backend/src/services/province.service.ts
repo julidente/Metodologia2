@@ -30,4 +30,3 @@ export class ProvinceService {
 }
 
 export default new ProvinceService();
-

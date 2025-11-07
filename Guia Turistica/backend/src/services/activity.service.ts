@@ -1,14 +1,14 @@
 // src/services/activity.service.ts
-import activityRepository from "../repositories/activity.repository";
+import activityRepository from '../repositories/activity.repository';
 // para usar el builder
-import { ActivityBuilder } from "../patterns/builder/activity.builder";
-import { CreateActivityDTO } from "../dtos/activity.dto";
+import { ActivityBuilder } from '../patterns/builder/activity.builder';
+import { CreateActivityDTO } from '../dtos/activity.dto';
 
 // para usar el strategy
 //import * as Strategies from "../patterns/strategy/indexStrategy"; // importa todas las strategies desde el index
-import { Activity } from "../models/entity/activity.entity"
+import { Activity } from '../models/entity/activity.entity';
 
-import { strategyMap } from "../patterns/strategy/strategy.mapper";
+import { strategyMap } from '../patterns/strategy/strategy.mapper';
 
 export class ActivityService {
   async getAll() {
@@ -75,7 +75,7 @@ export class ActivityService {
 
   async getById(activity_id: number) {
     const activity = await activityRepository.getById(activity_id);
-    if (!activity) throw new Error("Actividad no encontrada");
+    if (!activity) throw new Error('Actividad no encontrada');
     return activity;
   }
 
@@ -106,16 +106,15 @@ export class ActivityService {
 
   async update(activity_id: number, data: any) {
     const updated = await activityRepository.update(activity_id, data);
-    if (!updated) throw new Error("Actividad no encontrada");
+    if (!updated) throw new Error('Actividad no encontrada');
     return updated;
   }
 
   async delete(activity_id: number) {
     const deleted = await activityRepository.delete(activity_id);
-    if (!deleted) throw new Error("Actividad no encontrada");
+    if (!deleted) throw new Error('Actividad no encontrada');
     return deleted;
   }
 }
 
 export default new ActivityService();
-

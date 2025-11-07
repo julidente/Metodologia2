@@ -66,9 +66,9 @@ User.init(
   { sequelize, tableName: "Users", timestamps: true }
 ); */
 
-import { DataTypes, Model, Optional } from "sequelize";
-import { sequelize } from "../../config/database.config";
-import { IUser } from "../user.model";
+import { DataTypes, Model, Optional } from 'sequelize';
+import { sequelize } from '../../config/database.config';
+import { IUser } from '../user.model';
 
 // Campos opcionales al crear un User
 interface UserCreationAttributes extends Optional<IUser, 'user_id'> {}
@@ -87,5 +87,5 @@ User.init(
     email: { type: DataTypes.STRING, allowNull: false, unique: true },
     password_hash: { type: DataTypes.STRING, allowNull: false },
   },
-  { sequelize, tableName: "Users", timestamps: true }
+  { sequelize, tableName: 'Users', timestamps: true },
 );

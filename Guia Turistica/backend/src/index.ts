@@ -53,7 +53,7 @@ const PORT = process.env.PORT || 3001;
 import 'dotenv/config';
 import app from './app';
 import { Database } from './config/database.config';
-import { sequelize, City, Province, Category, Activity, Image, Subscription } from './models/entity';
+import { sequelize, City, Province, Category, Activity, Image } from './models/entity';
 
 const PORT = process.env.PORT || 3001;
 
@@ -76,6 +76,3 @@ const PORT = process.env.PORT || 3001;
     process.exit(1);
   }
 })();
-
-
-

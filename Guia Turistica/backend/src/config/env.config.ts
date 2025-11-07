@@ -1,6 +1,6 @@
 // src/config/env.config.ts
-import { z } from "zod";
-import dotenv from "dotenv";
+import { z } from 'zod';
+import dotenv from 'dotenv';
 
 dotenv.config();
 
@@ -10,7 +10,7 @@ const envSchema = z.object({
   DB_USER: z.string(),
   DB_PASSWORD: z.string(),
   DB_HOST: z.string(),
-  DB_PORT: z.string().default("5432"),
+  DB_PORT: z.string().default('5432'),
 
   // JWT
   JWT_SECRET: z.string(),
@@ -24,4 +24,3 @@ const envSchema = z.object({
 const env = envSchema.parse(process.env);
 
 export default env;
-
