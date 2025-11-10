@@ -1,5 +1,5 @@
 // src/repositories/image.repository.ts
-import { Image } from "../models/entity/image.entity";
+import { Image } from '../models/entity/image.entity';
 
 export class ImageRepository {
   async getAll() {

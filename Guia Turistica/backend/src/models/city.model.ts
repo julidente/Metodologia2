@@ -1,4 +1,4 @@
-//Modelo (model en tu carpeta models/) → Define interfaces o tipos TypeScript que representen esos datos en tu código, 
+//Modelo (model en tu carpeta models/) → Define interfaces o tipos TypeScript que representen esos datos en tu código,
 // y a veces funciones helper para manipularlos.
 
 // src/models/city.model.ts

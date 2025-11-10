@@ -1,8 +1,8 @@
 // src/controllers/activity.controller.ts
 
 // TODO: SAQUE RATING DE ACTIVITY SACARLO DE LAS BD, Y TODA FUNCION QUE TENGA QUE VER CON ESO
-import { Request, Response } from "express";
-import activityService from "../services/activity.service";
+import { Request, Response } from 'express';
+import activityService from '../services/activity.service';
 
 class ActivityController {
   async getAll(req: Request, res: Response) {
@@ -26,11 +26,11 @@ class ActivityController {
   // }
 
   // con sort secuencial
-   async getAllSorted(req: Request, res: Response) {
+  async getAllSorted(req: Request, res: Response) {
     try {
       // Recibe múltiples criterios separados por coma
       const sortQuery = req.query.sort as string | undefined;
-      const sortKeys = sortQuery ? sortQuery.split(",") : [];
+      const sortKeys = sortQuery ? sortQuery.split(',') : [];
 
       const activities = await activityService.getAllSorted(sortKeys);
       res.json(activities);
@@ -72,7 +72,7 @@ class ActivityController {
     try {
       const { id } = req.params;
       await activityService.delete(Number(id));
-      res.json({ message: "Actividad eliminada correctamente" });
+      res.json({ message: 'Actividad eliminada correctamente' });
     } catch (error: any) {
       res.status(404).json({ message: error.message });
     }

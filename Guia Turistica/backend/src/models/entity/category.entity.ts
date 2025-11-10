@@ -37,8 +37,8 @@ Category.hasMany(Activity, { foreignKey: "category_id", as: "activities" }); */
 
 // src/models/entity/category.entity.ts
 // sin asociaciones, se hacen en index.ts
-import { DataTypes, Model } from "sequelize";
-import { sequelize } from "../../config/database.config";
+import { DataTypes, Model } from 'sequelize';
+import { sequelize } from '../../config/database.config';
 
 export class Category extends Model {
   public category_id!: number;
@@ -58,7 +58,7 @@ Category.init(
   },
   {
     sequelize,
-    tableName: "Categories",
+    tableName: 'Categories',
     timestamps: true,
-  }
+  },
 );

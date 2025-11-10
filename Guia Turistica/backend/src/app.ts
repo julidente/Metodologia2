@@ -20,14 +20,13 @@ app.use(express.urlencoded({ extended: true }));
 //app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/cities', cityRoutes);
-app.use('/api/provinces', provinceRoutes)
-app.use('/api/categories', categoryRoutes)
-app.use('/api/activities', activitiesRoutes)
-app.use('/api/users', userRoutes)
-app.use('/api/images', imagesRoutes)
+app.use('/api/provinces', provinceRoutes);
+app.use('/api/categories', categoryRoutes);
+app.use('/api/activities', activitiesRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/images', imagesRoutes);
 
 // Middleware de manejo de errores al final
 //app.use(errorMiddleware);
 
 export default app;
-

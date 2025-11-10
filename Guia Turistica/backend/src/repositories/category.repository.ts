@@ -1,5 +1,5 @@
 // src/repositories/category.repository.ts
-import { Category } from "../models/entity/category.entity";
+import { Category } from '../models/entity/category.entity';
 
 export class CategoryRepository {
   async getAll() {
@@ -7,7 +7,7 @@ export class CategoryRepository {
   }
 
   async getById(category_id: number) {
-    return await Category.findByPk(category_id, { include: ["activities"] });
+    return await Category.findByPk(category_id, { include: ['activities'] });
   }
 
   async create(data: { name: string; description?: string }) {

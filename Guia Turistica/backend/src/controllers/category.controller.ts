@@ -1,6 +1,6 @@
 // src/controllers/category.controller.ts
-import { Request, Response } from "express";
-import categoryService from "../services/category.service";
+import { Request, Response } from 'express';
+import categoryService from '../services/category.service';
 
 class CategoryController {
   async getAll(req: Request, res: Response) {
@@ -45,7 +45,7 @@ class CategoryController {
     try {
       const { id } = req.params;
       await categoryService.delete(Number(id));
-      res.json({ message: "Categoría eliminada correctamente" });
+      res.json({ message: 'Categoría eliminada correctamente' });
     } catch (error: any) {
       res.status(404).json({ message: error.message });
     }

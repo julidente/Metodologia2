@@ -24,13 +24,13 @@ export default router; */
 
 // con dinaryconfig
 // src/routes/image.routes.ts
-import { Router } from "express";
-import multer from "multer";
-import ImageController from "../controllers/image.controller";
+import { Router } from 'express';
+import multer from 'multer';
+import ImageController from '../controllers/image.controller';
 
 const router = Router();
-const upload = multer({ dest: "uploads/" }); // Carpeta temporal
+const upload = multer({ dest: 'uploads/' }); // Carpeta temporal
 
-router.post("/", upload.single("image"), (req, res) => ImageController.create(req, res));
+router.post('/', upload.single('image'), (req, res) => ImageController.create(req, res));
 
 export default router;

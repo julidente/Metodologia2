@@ -34,8 +34,8 @@ export default new ImageService(); */
 
 // src/services/image.service.ts
 // usando dinary config
-import { Image } from "../models/entity/image.entity";
-import cloudinary from "../config/cloudinary";
+import { Image } from '../models/entity/image.entity';
+import cloudinary from '../config/cloudinary';
 
 class ImageService {
   async getAll() {
@@ -44,14 +44,14 @@ class ImageService {
 
   async getById(image_id: number) {
     const image = await Image.findByPk(image_id);
-    if (!image) throw new Error("Imagen no encontrada");
+    if (!image) throw new Error('Imagen no encontrada');
     return image;
   }
 
   async create(filePath: string, activity_id: number) {
     // Subir a Cloudinary
     const result = await cloudinary.uploader.upload(filePath, {
-      folder: "activities",
+      folder: 'activities',
     });
 
     // Guardar URL en la DB
@@ -65,14 +65,14 @@ class ImageService {
 
   async update(image_id: number, data: { url?: string; activity_id?: number }) {
     const image = await Image.findByPk(image_id);
-    if (!image) throw new Error("Imagen no encontrada");
+    if (!image) throw new Error('Imagen no encontrada');
     return await image.update(data);
   }
 
   async delete(image_id: number) {
     const image = await Image.findByPk(image_id);
-    if (!image) throw new Error("Imagen no encontrada");
-    
+    if (!image) throw new Error('Imagen no encontrada');
+
     // Opcional: eliminar de Cloudinary si guardaste el public_id
     await image.destroy();
     return image;

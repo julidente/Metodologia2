@@ -1,4 +1,4 @@
-//Entity (o Model de Sequelize) → Define la estructura de la tabla, 
+//Entity (o Model de Sequelize) → Define la estructura de la tabla,
 // columnas y tipos de datos en la base de datos, así como relaciones. Por ejemplo: City como entidad.
 
 /* // src/models/entity.city.entity.ts
@@ -74,10 +74,10 @@ City.belongsTo(Province, { foreignKey: "province_id", as: "province" });
 Province.hasMany(City, { foreignKey: "province_id", as: "cities" }); */
 
 // src/models/entity/city.entity.ts
-import { DataTypes, Model } from "sequelize";
-import { sequelize } from "../../config/database.config";
-import { ICity } from "../city.model";
-import { Province } from "./province.entity";
+import { DataTypes, Model } from 'sequelize';
+import { sequelize } from '../../config/database.config';
+import { ICity } from '../city.model';
+import { Province } from './province.entity';
 
 export class City extends Model {
   public city_id!: number;
@@ -88,7 +88,6 @@ export class City extends Model {
   // Asociaciones
   // -------------------
   public province?: Province; //opcional (para el strategy)
-
 }
 
 // export class City extends Model<ICity> implements ICity {
@@ -97,12 +96,11 @@ export class City extends Model {
 //   public province_id!: number;
 // }
 
-
 City.init(
   {
     city_id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     name: { type: DataTypes.STRING, allowNull: false },
     province_id: { type: DataTypes.INTEGER, allowNull: false },
   },
-  { sequelize, tableName: "Cities", timestamps: true }
+  { sequelize, tableName: 'Cities', timestamps: true },
 );

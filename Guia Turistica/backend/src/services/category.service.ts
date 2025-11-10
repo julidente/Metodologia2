@@ -1,5 +1,5 @@
 // src/services/category.service.ts
-import categoryRepository from "../repositories/category.repository";
+import categoryRepository from '../repositories/category.repository';
 
 export class CategoryService {
   async getAll() {
@@ -8,7 +8,7 @@ export class CategoryService {
 
   async getById(category_id: number) {
     const category = await categoryRepository.getById(category_id);
-    if (!category) throw new Error("Categoría no encontrada");
+    if (!category) throw new Error('Categoría no encontrada');
     return category;
   }
 
@@ -18,16 +18,15 @@ export class CategoryService {
 
   async update(category_id: number, data: { name?: string; description?: string }) {
     const updated = await categoryRepository.update(category_id, data);
-    if (!updated) throw new Error("Categoría no encontrada");
+    if (!updated) throw new Error('Categoría no encontrada');
     return updated;
   }
 
   async delete(category_id: number) {
     const deleted = await categoryRepository.delete(category_id);
-    if (!deleted) throw new Error("Categoría no encontrada");
+    if (!deleted) throw new Error('Categoría no encontrada');
     return deleted;
   }
 }
 
 export default new CategoryService();
-

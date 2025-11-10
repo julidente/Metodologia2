@@ -60,8 +60,8 @@ class UserController {
 export default new UserController(); */
 
 // src/controllers/user.controller.ts
-import { Request, Response } from "express";
-import userService from "../services/user.service";
+import { Request, Response } from 'express';
+import userService from '../services/user.service';
 
 class UserController {
   async getAll(req: Request, res: Response) {
@@ -107,7 +107,7 @@ class UserController {
     try {
       const { id } = req.params;
       await userService.delete(Number(id));
-      res.json({ message: "Usuario eliminado correctamente" });
+      res.json({ message: 'Usuario eliminado correctamente' });
     } catch (error: any) {
       res.status(404).json({ message: error.message });
     }

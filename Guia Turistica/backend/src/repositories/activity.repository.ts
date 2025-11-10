@@ -31,8 +31,8 @@ export class ActivityRepository {
 export default new ActivityRepository(); */
 
 // src/repositories/activity.repository.ts
-import { Activity, City, Category, Image, Province } from "../models/entity";
-import { CreateActivityDTO, UpdateActivityDTO } from "../dtos/activity.dto";
+import { Activity, City, Category, Image, Province } from '../models/entity';
+import { CreateActivityDTO, UpdateActivityDTO } from '../dtos/activity.dto';
 
 export class ActivityRepository {
   // async getAll(): Promise<Activity[]> {
@@ -47,27 +47,27 @@ export class ActivityRepository {
 
   // para usar el sorted by province
   async getAll(): Promise<Activity[]> {
-  return await Activity.findAll({
-    include: [
-      {
-        model: City,
-        as: "city",
-        include: [
-          { model: Province, as: "province" }, // agregamos province aca
-        ],
-      },
-      { model: Category, as: "category" },
-      { model: Image, as: "images" },
-    ],
-  });
-}
+    return await Activity.findAll({
+      include: [
+        {
+          model: City,
+          as: 'city',
+          include: [
+            { model: Province, as: 'province' }, // agregamos province aca
+          ],
+        },
+        { model: Category, as: 'category' },
+        { model: Image, as: 'images' },
+      ],
+    });
+  }
 
   async getById(activity_id: number): Promise<Activity | null> {
     return await Activity.findByPk(activity_id, {
       include: [
-        { model: City, as: "city" },
-        { model: Category, as: "category" },
-        { model: Image, as: "images" },
+        { model: City, as: 'city' },
+        { model: Category, as: 'category' },
+        { model: Image, as: 'images' },
       ],
     });
   }

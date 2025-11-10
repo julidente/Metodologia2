@@ -56,4 +56,3 @@ export class Database {
 
 // Exporta la instancia única
 export const sequelize = Database.getInstance();
-

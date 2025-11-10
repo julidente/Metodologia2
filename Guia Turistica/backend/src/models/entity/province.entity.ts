@@ -1,6 +1,6 @@
 // src/models/entity/province.entity.ts
-import { DataTypes, Model } from "sequelize";
-import { sequelize } from "../../config/database.config";
+import { DataTypes, Model } from 'sequelize';
+import { sequelize } from '../../config/database.config';
 
 export class Province extends Model {
   public province_id!: number;
@@ -21,7 +21,7 @@ Province.init(
   },
   {
     sequelize,
-    tableName: "Provinces",
+    tableName: 'Provinces',
     timestamps: true,
-  }
+  },
 );

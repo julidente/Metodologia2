@@ -74,11 +74,11 @@ Activity.hasMany(Image, { foreignKey: "activity_id", as: "images" });
 Activity.hasMany(Subscription, { foreignKey: "activity_id", as: "subscriptions" }); */
 
 // src/models/entity/activity.entity.ts
-import { DataTypes, Model } from "sequelize";
-import { sequelize } from "../../config/database.config";
+import { DataTypes, Model } from 'sequelize';
+import { sequelize } from '../../config/database.config';
 // para los strategy necesito asociaciones con city y category, requiero las entidades
-import { City } from "./city.entity";
-import { Category } from "./category.entity";
+import { City } from './city.entity';
+import { Category } from './category.entity';
 
 export class Activity extends Model {
   public activity_id!: number;
@@ -93,8 +93,8 @@ export class Activity extends Model {
   // -------------------
   // Asociaciones
   // -------------------
-  public city?: City;          // opcional porque puede no venir
-  public category?: Category;  // opcional
+  public city?: City; // opcional porque puede no venir
+  public category?: Category; // opcional
 }
 
 Activity.init(
@@ -108,5 +108,5 @@ Activity.init(
     category_id: { type: DataTypes.INTEGER, allowNull: false },
     city_id: { type: DataTypes.INTEGER, allowNull: false },
   },
-  { sequelize, tableName: "Activities", timestamps: true }
+  { sequelize, tableName: 'Activities', timestamps: true },
 );
