@@ -38,7 +38,7 @@ module.exports = {
 'use strict';
 
 module.exports = {
-  async up(queryInterface, Sequelize) {
+  async up(queryInterface) {
     const provinces = [
       'Buenos Aires',
       'Catamarca',
@@ -75,7 +75,7 @@ module.exports = {
     return queryInterface.bulkInsert('Provinces', provinceObjects, {});
   },
 
-  async down(queryInterface, Sequelize) {
+  async down(queryInterface) {
     return queryInterface.bulkDelete('Provinces', null, {});
   },
 };

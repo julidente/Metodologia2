@@ -103,7 +103,7 @@ module.exports = {
 'use strict';
 
 module.exports = {
-  async up(queryInterface, Sequelize) {
+  async up(queryInterface) {
     // Primero obtenemos todas las provincias
     const provinces = await queryInterface.sequelize.query(
       `SELECT province_id, name FROM "Provinces";`,
@@ -194,7 +194,7 @@ module.exports = {
     return queryInterface.bulkInsert('Cities', cityObjects, {});
   },
 
-  async down(queryInterface, Sequelize) {
+  async down(queryInterface) {
     return queryInterface.bulkDelete('Cities', null, {});
   },
 };

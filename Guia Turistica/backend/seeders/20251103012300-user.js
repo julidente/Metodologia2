@@ -4,7 +4,7 @@
 //const bcrypt = require('bcrypt');
 
 module.exports = {
-  async up(queryInterface, Sequelize) {
+  async up(queryInterface) {
     // Hash la contraseña del admin
     //const passwordHash = await bcrypt.hash('admin123', 10);
     // mejor contraseña fija
@@ -20,7 +20,7 @@ module.exports = {
     ]);
   },
 
-  async down(queryInterface, Sequelize) {
+  async down(queryInterface) {
     await queryInterface.bulkDelete('Users', { email: 'admin@example.com' });
   },
 };
