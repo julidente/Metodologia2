@@ -22,7 +22,7 @@ class ImageController {
   }
 
   // con clouddinary config
-  async create(req: Request, res: Response) {
+  /* async create(req: Request, res: Response) {
     try {
       const { activity_id } = req.body;
       if (!req.file) return res.status(400).json({ message: 'Archivo no recibido' });
@@ -32,18 +32,18 @@ class ImageController {
     } catch (error: any) {
       res.status(500).json({ message: error.message });
     }
-  }
+  } */
 
   // con url de la imagen en base de datos
-  //   async create(req: Request, res: Response) {
-  //     try {
-  //       const { url, activity_id } = req.body;
-  //       const image = await imageService.create({ url, activity_id });
-  //       res.status(201).json(image);
-  //     } catch (error: any) {
-  //       res.status(400).json({ message: error.message });
-  //     }
-  //   }
+  async create(req: Request, res: Response) {
+    try {
+      const { url, activity_id } = req.body;
+      const image = await imageService.create({ url, activity_id });
+      res.status(201).json(image);
+    } catch (error: any) {
+      res.status(400).json({ message: error.message });
+    }
+  }
 
   async update(req: Request, res: Response) {
     try {
