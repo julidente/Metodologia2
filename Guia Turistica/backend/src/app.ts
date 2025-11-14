@@ -9,6 +9,8 @@ import activitiesRoutes from './routes/activity.routes';
 import userRoutes from './routes/user.routes';
 import imagesRoutes from './routes/image.routes';
 import authRoutes from './routes/auth.routes';
+
+import { setupSwagger } from '../src/config/swagger'; // ✅ IMPORTANTE
 //import errorMiddleware from './middlewares/error.middleware.js';
 
 const app = express();
@@ -16,6 +18,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// ✅ Swagger UI
+setupSwagger(app);
 
 //app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
