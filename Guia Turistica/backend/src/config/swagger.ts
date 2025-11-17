@@ -49,6 +49,16 @@ const options: Parameters<typeof swaggerJSDoc>[0] = {
         url: 'http://localhost:3001', // Cambia si usas proxy o variable de entorno
       },
     ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          // nombre que usarás en "security" de las rutas
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
+      },
+    },
   },
   apis: ['./src/routes/*.ts'], // Ajusta si tus rutas están en otro directorio
 };

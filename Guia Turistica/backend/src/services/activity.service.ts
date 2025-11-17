@@ -10,6 +10,9 @@ import { Activity } from '../models/entity/activity.entity';
 
 import { strategyMap } from '../patterns/strategy/strategy.mapper';
 
+//import { ISortStrategy } from '../patterns/strategy/sortStrategy.interface';
+//import {SortByMultiple} from '../patterns/strategy/sortByMultiple.strategy';
+
 export class ActivityService {
   async getAll() {
     return await activityRepository.getAll();
@@ -43,7 +46,7 @@ export class ActivityService {
 
   // con el mapper aparte, sin combinaciones (sin sort secuencial)
 
-  /* async getAllSorted(sortKey?: string): Promise<Activity[]> {
+  async getAllSorted(sortKey?: string): Promise<Activity[]> {
     const activities = await activityRepository.getAll();
 
     if (!sortKey) return activities;
@@ -53,25 +56,25 @@ export class ActivityService {
 
     const strategy = new StrategyClass();
     return strategy.sort(activities);
-  } */
+  }
 
   // con el mapper aparte, con combinaciones (sort secuencial)
-  async getAllSorted(sortKeys?: string[]): Promise<Activity[]> {
-    const activities = await activityRepository.getAll();
+  // async getAllSorted(sortKeys?: string[]): Promise<Activity[]> {
+  //   const activities = await activityRepository.getAll();
 
-    if (!sortKeys || sortKeys.length === 0) return activities;
+  //   if (!sortKeys || sortKeys.length === 0) return activities;
 
-    let sorted = [...activities]; // hacemos copia para no mutar el original
+  //   let sorted = [...activities]; // hacemos copia para no mutar el original
 
-    for (const key of sortKeys) {
-      const StrategyClass = strategyMap[key];
-      if (!StrategyClass) continue; // ignorar keys inválidas
-      const strategy = new StrategyClass();
-      sorted = strategy.sort(sorted);
-    }
+  //   for (const key of sortKeys) {
+  //     const StrategyClass = strategyMap[key];
+  //     if (!StrategyClass) continue; // ignorar keys inválidas
+  //     const strategy = new StrategyClass();
+  //     sorted = strategy.sort(sorted);
+  //   }
 
-    return sorted;
-  }
+  //   return sorted;
+  // }
 
   async getById(activity_id: number) {
     const activity = await activityRepository.getById(activity_id);
@@ -97,7 +100,7 @@ export class ActivityService {
     if (data.description) builder.setDescription(data.description);
     if (data.discount !== undefined) builder.setDiscount(data.discount);
 
-    // No validamos, ya lo hizo el middleware
+    // No validamos, ya lo hizo el middleware con Zod
     const activityData = builder.build();
 
     // Creamos en DB

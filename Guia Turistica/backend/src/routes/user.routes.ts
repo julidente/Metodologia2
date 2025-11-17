@@ -3,6 +3,7 @@ import UserController from '../controllers/user.controller';
 import { validate } from '../middlewares/validate.middleware';
 import { userInputSchema, userUpdateSchema } from '../schemas/user.schema';
 import { idParamSchema } from '../schemas/common.schema';
+import { authenticateJWT } from '../middlewares/auth.middleware';
 
 const router = Router();
 /**
@@ -131,12 +132,15 @@ router.post('/', validate(userInputSchema), (req, res) => UserController.create(
  *         description: Error en los datos de entrada
  */
 //router.post('/', validate(userInputSchema), (req, res) => UserController.create(req, res));
+
 /**
  * @swagger
  * /api/users/{id}:
  *   put:
- *     summary: Actualiza un usuario existente
+ *     summary: Actualiza un usuario existente (necesita token hacer login y poner el token en Authorize)
  *     tags: [Usuarios]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -157,21 +161,38 @@ router.post('/', validate(userInputSchema), (req, res) => UserController.create(
  *                 type: string
  *     responses:
  *       200:
- *         description: Usuario actualizado
+ *         description: Usuario actualizado correctamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 user_id:
+ *                   type: integer
+ *                 name:
+ *                   type: string
+ *                 email:
+ *                   type: string
  *       400:
  *         description: Error en los datos de entrada
  *       404:
  *         description: Usuario no encontrado
  */
-router.put('/:id', validate(idParamSchema, 'params'), validate(userUpdateSchema), (req, res) =>
-  UserController.update(req, res),
+router.put(
+  '/:id',
+  authenticateJWT,
+  validate(idParamSchema, 'params'),
+  validate(userUpdateSchema),
+  (req, res) => UserController.update(req, res),
 );
 /**
  * @swagger
  * /api/users/{id}:
  *   delete:
- *     summary: Elimina un usuario
+ *     summary: Elimina un usuario (necesita token hacer login y poner el token en Authorize)
  *     tags: [Usuarios]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -180,12 +201,20 @@ router.put('/:id', validate(idParamSchema, 'params'), validate(userUpdateSchema)
  *           type: integer
  *         description: ID del usuario
  *     responses:
- *       204:
+ *       200:
  *         description: Usuario eliminado correctamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Usuario eliminado correctamente
  *       404:
  *         description: Usuario no encontrado
  */
-router.delete('/:id', validate(idParamSchema, 'params'), (req, res) =>
+router.delete('/:id', authenticateJWT, validate(idParamSchema, 'params'), (req, res) =>
   UserController.delete(req, res),
 );
 
