@@ -1,3 +1,4 @@
+// tsconfig.json
 {
   // Visit https://aka.ms/tsconfig to read more about this file
   "compilerOptions": {
@@ -39,6 +40,7 @@
   "exclude": [
     "eslint.config.ts",
     "node_modules",
-    "dist"
+    "dist",
+    "jest.setup.ts"
   ]
 }

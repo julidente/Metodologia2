@@ -5,4 +5,14 @@ module.exports = {
   testEnvironment: 'node', // entorno de Node
   testMatch: ['**/*.test.ts'], // busca directamente los tests .ts
   modulePathIgnorePatterns: ['dist'], // ignora dist
+
+  setupFiles: ['<rootDir>/jest.setup.ts'],
+  // globals: {
+  //   'ts-jest': {
+  //     tsconfig: 'tsconfig.test.json'
+  //   }
+  // }
+  transform: {
+    '^.+\\.ts$': ['ts-jest', { tsconfig: 'tsconfig.test.json' }],
+  },
 };

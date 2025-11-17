@@ -3,6 +3,7 @@ import ActivityController from '../controllers/activity.controller';
 import { validate } from '../middlewares/validate.middleware';
 import { createActivitySchema, updateActivitySchema } from '../schemas/activity.schema';
 import { idParamSchema } from '../schemas/common.schema';
+import { authenticateJWT } from '../middlewares/auth.middleware';
 
 const router = Router();
 /**
@@ -50,7 +51,7 @@ router.get('/', (req, res) => ActivityController.getAll(req, res));
  * @swagger
  * /api/activities/sorted:
  *   get:
- *     summary: Obtiene las actividades ordenadas según los criterios especificados
+ *     summary: Obtiene las actividades ordenadas según un criterio
  *     tags: [Actividades]
  *     parameters:
  *       - in: query
@@ -58,16 +59,22 @@ router.get('/', (req, res) => ActivityController.getAll(req, res));
  *         required: false
  *         schema:
  *           type: string
- *           example: discountDesc,priceAsc
+ *           enum:
+ *             - priceAsc
+ *             - priceDesc
+ *             - discountAsc
+ *             - discountDesc
+ *             - name
+ *             - city
+ *             - province
+ *             - category
  *         description: >
- *           Define los criterios de ordenamiento, separados por coma.
- *           Ejemplos:
+ *           Define un único criterio de ordenamiento. Ejemplos:
  *           - `sort=priceAsc` → Ordena por precio ascendente
+ *           - `sort=priceDesc` → Ordena por precio descendente
  *           - `sort=discountDesc` → Ordena por descuento descendente
  *           - `sort=name` → Ordena alfabéticamente por nombre
  *           - `sort=city` → Ordena por ciudad
- *           - `sort=city,name` → Ordena por ciudad y, dentro de cada ciudad, por nombre
- *           - `sort=discountDesc,priceAsc` → Ordena primero por descuento descendente y luego por precio ascendente
  *     responses:
  *       200:
  *         description: Lista de actividades ordenadas
