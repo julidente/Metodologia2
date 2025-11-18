@@ -1,7 +1,232 @@
-comando para acceder a las bases de datos: docker exec -it guia_db psql -U postgres -d guia_turistica
+# Guia turistica con Docker, Node.js, PostgreSQL y React
+
+### 🎯 Arquitectura General
+```
+┌─────────────┐    ┌─────────────┐    ┌─────────────┐
+│   Nginx     │    │   React     │    │   Express   │
+│  (Proxy)    │◄──►│ (Frontend)  │◄──►│  (Backend)  │
+│   :80       │    │   :3000     │    │   :3001     │
+└─────────────┘    └─────────────┘    └─────────────┘
+                                              │
+                   ┌─────────────┐    ┌─────────────┐
+                   │    Redis    │    │ PostgreSQL  │
+                   │  (Cache)    │    │    (DB)     │
+                   │   :6379     │    │   :5432     │
+                   └─────────────┘    └─────────────┘
+```
+
+### 🔧 Servicios del Sistema
+
+| Servicio | Tecnología | Puerto | Función |
+|----------|------------|--------|---------|
+| **Frontend** | React 18 | 3000 | Interfaz de usuario |
+| **Backend** | Express + Sequelize | 3001 | API REST |
+| **Database** | PostgreSQL 15 | 5432 | Base de datos principal |
+| **Cache** | Redis 7 | 6379 | Cache y sesiones |
+| **Proxy** | Nginx | 80 | Reverse proxy |
+| **pgAdmin** | pgAdmin 4 | 5050 | Administración de BD |
+
+---
+
+## Diagrama UML
+
+![Diagrama UML](./backend//images/Diagra%20UML%20Guia%20Turistica.jpg)
+
+## Estructura de Carpetas (falta frontend)
+
+```bash
+Metodologia2/
+└── Guia Turistica/
+    ├── docker-compose.yml
+    ├── .env
+    ├── .env.example
+    ├── README.md
+    │
+    ├── backend/                 # Backend (Node + TS)
+    │   ├── .husky/
+    │   │   ├── pre-commit
+    │   │   └── pre-push
+    │   │
+    │   ├── config/
+    │   │   └── config.js
+    │   │
+    │   ├── images/
+    │   │   └── Diagrama UML Guia Turistica.jpg
+    │   │
+    │   ├── migrations/
+    │   │   ├── 20251031134600-create-province.js
+    │   │   ├── 20251031134600-create-city.js
+    │   │   ├── 20251031160253-create_category.js
+    │   │   ├── 20251031160307-create_activity.js
+    │   │   ├── 20251103011809-create_user.js
+    │   │   └── 20251103014850-create-image.js
+    │   │
+    │   ├── seeders/
+    │   │   ├── 20251031134804-provinces.js
+    │   │   ├── 20251031140030-cities.js
+    │   │   ├── 20251031160435-category.js
+    │   │   ├── 20251101041011-activity.js
+    │   │   ├── 20251103012300-user.js
+    │   │   └── 20251103020855-image.js
+    │   │
+    │   ├── src/
+    │   │   ├── config/
+    │   │   │   ├── cloudinary.ts
+    │   │   │   ├── database.config.ts
+    │   │   │   ├── env.config.ts
+    │   │   │   ├── jwt.config.ts
+    │   │   │   ├── swagger.ts
+    │   │   │   └── index.ts
+    │   │   │
+    │   │   ├── controllers/
+    │   │   │   ├── activity.controller.ts
+    │   │   │   ├── auth.controller.ts
+    │   │   │   ├── category.controller.ts
+    │   │   │   ├── city.controller.ts
+    │   │   │   ├── image.controller.ts
+    │   │   │   ├── province.controller.ts
+    │   │   │   ├── uploadDinary.controller.ts
+    │   │   │   └── user.controller.ts
+    │   │   │
+    │   │   ├── dtos/
+    │   │   │   ├── activity.dto.ts
+    │   │   │   ├── multeRequesDto.ts
+    │   │   │   └── user.dto.ts
+    │   │   │
+    │   │   ├── middlewares/
+    │   │   │   ├── auth.middleware.ts
+    │   │   │   ├── errorHandler.ts
+    │   │   │   └── validate.middleware.ts
+    │   │   │
+    │   │   ├── models/
+    │   │   │   ├── activity.model.ts
+    │   │   │   ├── category.model.ts
+    │   │   │   ├── city.model.ts
+    │   │   │   ├── image.model.ts
+    │   │   │   ├── province.model.ts
+    │   │   │   ├── user.model.ts
+    │   │   │   │
+    │   │   │   └── entity/      # Entidades dentro de models/
+    │   │   │       ├── activity.entity.ts
+    │   │   │       ├── category.entity.ts
+    │   │   │       ├── city.entity.ts
+    │   │   │       ├── image.entity.ts
+    │   │   │       ├── province.entity.ts
+    │   │   │       └── user.entity.ts
+    │   │   │
+    │   │   ├── patterns/   # Implementación de patrones de diseño
+    │   │   │   ├── builder/
+    │   │   │   │   └── activity.builder.ts
+    │   │   │   ├── singleton/
+    │   │   │   │   └── database.connection.ts
+    │   │   │   └── strategy/
+    │   │   │       ├── activitySorter.context.ts
+    │   │   │       ├── indexStrategy.ts
+    │   │   │       ├── sortByCategory.strategy.ts
+    │   │   │       ├── sortByCity.strategy.ts
+    │   │   │       ├── sortByDiscountAsc.strategy.ts
+    │   │   │       ├── sortByDiscountDesc.strategy.ts
+    │   │   │       ├── sortByName.strategy.ts
+    │   │   │       ├── sortByPriceAsc.strategy.ts
+    │   │   │       ├── sortByPriceDesc.strategy.ts
+    │   │   │       ├── sortByProvince.strategy.ts
+    │   │   │       └── strategy.mapper.ts
+    │   │   │
+    │   │   ├── repositories/
+    │   │   │   ├── activity.repository.ts
+    │   │   │   ├── category.repository.ts
+    │   │   │   ├── city.repository.ts
+    │   │   │   ├── image.repository.ts
+    │   │   │   ├── province.repository.ts
+    │   │   │   └── user.repository.ts
+    │   │   │
+    │   │   ├── routes/
+    │   │   │   ├── activity.routes.ts
+    │   │   │   ├── auth.routes.ts
+    │   │   │   ├── category.routes.ts
+    │   │   │   ├── city.routes.ts
+    │   │   │   ├── image.routes.ts
+    │   │   │   ├── province.routes.ts
+    │   │   │   └── user.routes.ts
+    │   │   │
+    │   │   ├── schemas/    # validaciones Zod
+    │   │   │   ├── activity.schema.ts
+    │   │   │   ├── auth.schema.ts
+    │   │   │   ├── category.schema.ts
+    │   │   │   ├── city.schema.ts
+    │   │   │   ├── common.schema.ts
+    │   │   │   ├── image.schema.ts
+    │   │   │   ├── province.schema.ts
+    │   │   │   └── user.schema.ts
+    │   │   │
+    │   │   ├── services/
+    │   │   │   ├── activity.service.ts
+    │   │   │   ├── auth.service.ts
+    │   │   │   ├── category.service.ts
+    │   │   │   ├── city.service.ts
+    │   │   │   ├── image.service.ts
+    │   │   │   ├── province.service.ts
+    │   │   │   ├── subscription.service.ts
+    │   │   │   └── user.service.ts
+    │   │   │
+    │   │   ├── tests/
+    │   │   │   ├── integration/
+    │   │   │   └── unit/
+    │   │   │       ├── activity.test.ts
+    │   │   │       ├── auth.test.ts
+    │   │   │       └── user.test.ts
+    │   │   │
+    │   │   ├── types/
+    │   │   │   ├── jsonwebtoken.d.ts
+    │   │   │   └── swagger-jsdoc.d.ts
+    │   │   │
+    │   │   ├── utils/
+    │   │   │   ├── hashPassword.ts
+    │   │   │   ├── parseId.ts
+    │   │   │   ├── app.ts
+    │   │   │   ├── index.ts
+    │   │   │   └── test-app.ts
+    │   │   │
+    │   │   └── uploads/
+    │   │
+    │   ├── .env.test
+    │   ├── Dockerfile
+    │   ├── Dockerfile.dev
+    │   ├── eslint.config.ts
+    │   ├── jest.config.cjs
+    │   ├── jest.setup.ts
+    │   ├── package.json
+    │   ├── tsconfig.json
+    │   ├── tsconfig.test.json
+    │
+    ├── .env
+    ├── .gitignore
+    ├── docker-compose.yml
+    ├── Guia Turistica-Readme.md
+    │
+    ├── frontend/                # Frontend (React)
+    │   ├── Dockerfile.dev
+    │   ├── package.json
+    │   └── src/
+    │
+    ├── database/
+    │   └── init.sql
+    │
+    ├── nginx/
+    │   └── nginx.conf
+    │
+    └── pgadmin/
+        ├── servers.json
+        ├── servers-with-password-json
+        ├── Dockerfile
+        └── pgpass
+```
+
+
+## Guia de instalacion
 
 ### 1. Agregar un .env al mismo nivel que este readme
-
+```bash
 ### 
 para poner en un .env en la carpeta guia turistica (mismo nivel que este readme):
 # =====================================
@@ -112,9 +337,32 @@ PGADMIN_DEFAULT_EMAIL=admin@example.com
 PGADMIN_DEFAULT_PASSWORD=admin123
 PGADMIN_CONFIG_SERVER_MODE=False
 PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED=False
+```
 
-### 2. Levantar los Contenedores con Docker
+### 2. Agregar un .env.test dentro de la carpeta backend
+```bash
+# Database (aunque no se use realmente si mockeas el servicio)
+DB_NAME=testdb
+DB_USER=testuser
+DB_PASSWORD=testpass
+DB_HOST=localhost
+DB_PORT=5432
 
+# JWT
+JWT_SECRET=testsecret
+JWT_EXPIRES_IN=1h
+
+# Admin
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD_HASH=$2b$10$hash_ficticio_para_tests
+```
+
+### 3. Levantar los Contenedores con Docker
+
+Entrar en la carpeta con el .yml:
+```bash
+cd '.\Guia Turistica\'
+```
 Primero, construir y levantar los contenedores:
 
 ```bash
@@ -125,24 +373,27 @@ docker-compose up -d
 Agregamos las dependencias en el backend:
 vamos al backend con cd  y luego:
 ```bash
-npm i
+npm install
 ```
 
+para ver si el backend funciona correctamente hacemos un log
+```bash
+docker-compose logs backend
+```
+
+### 4. Preparar las bases de datos 
 Luego, ingresar al contenedor del backend para ejecutar las migraciones y los seeders:
 
 ```bash
 docker-compose exec backend sh
 
 # Dentro del contenedor:
-npx sequelize-cli db:migrate ( en el de la guiTuristica no es necesario se hace automaticamente las tablas)
-npx sequelize-cli db:seed:all ( los seeders hay que hacerlos manualmente)
+npx sequelize-cli db:migrate
+npx sequelize-cli db:seed:all
 exit
 ```
-para ver si el backend funciona correctamente hacemos un log
-```bash
-docker-compose logs backend
-```
 
+### 5. Revisar contenido de la base de datos
 Si uno quiere ingresar para ver las tablas de la base de datos:
 ```bash
 docker exec -it guia_db psql -U postgres -d guia_turistica
@@ -156,30 +407,23 @@ docker exec -it guia_db psql -U postgres -d guia_turistica
 \q #para salir
 ```
 
+## Dependencias
 
-🧩 Beneficios de esta separación
+## 📦 Dependencias del Backend
 
-✅ Repositorios: se encargan solo de hablar con la base de datos.
-✅ Servicios: aplican reglas de negocio y validaciones.
-✅ Controladores: gestionan el flujo HTTP (request/response).
-✅ Fácil de testear: puedes mockear el repositorio al probar el servicio.
-✅ Escalable: puedes agregar cache, logging o múltiples fuentes de datos sin romper el resto.
+- **axios**: Cliente HTTP para realizar peticiones a servicios externos.  
+- **bcrypt**: Encripta contraseñas de forma segura para el registro y login.  
+- **cors**: Permite que el frontend se comunique con el backend desde otro dominio (Cross-Origin Resource Sharing).  
+- **jsonwebtoken**: Implementa autenticación mediante tokens JWT.  
+- **swagger-jsdoc**: Genera la documentación de la API a partir del código.  
+- **swagger-ui-express**: Expone la documentación Swagger en una ruta del backend.  
+- **zod**: Valida datos de entrada mediante esquemas tipados.  
+- **sequelize**: ORM que facilita la interacción con PostgreSQL usando modelos en JavaScript/TypeScript.  
 
-🧩 Cómo encaja esto en tu setup
+## 🛠️ Dependencias de Desarrollo
 
-Ya tienes:
-
-config/config.js → usado solo por Sequelize CLI (migraciones/seeders)
-
-src/config/env.config.ts → define y valida las variables de entorno
-
-src/config/database.config.ts → crea la instancia de Sequelize
-
-Entonces, el paso siguiente es usar tu env.config.ts dentro del Singleton que maneja la conexión.
-
-🧠 Qué logras con esto
-
-✅ Una única fuente de verdad (env.config.ts) → las variables se validan y centralizan ahí.
-✅ Singleton del ORM (Database) → una sola conexión Sequelize en toda la app.
-✅ Compatibilidad con CLI (config/config.js) → el CLI sigue usando las mismas .env, aunque sin validación de Zod.
-✅ Preparado para producción y test → puedes hacer mock fácilmente del Database o del sequelize.
+- **husky**: Ejecuta hooks de Git como pre-commit y pre-push para asegurar calidad.  
+- **eslint**: Linter que detecta errores y aplica buenas prácticas en el código.  
+- **prettier**: Formateador automático que mantiene un estilo de código consistente.  
+- **typescript**: Lenguaje de tipado estático que mejora la robustez del backend.  
+- **jest**: Framework para realizar pruebas unitarias y de integración.
