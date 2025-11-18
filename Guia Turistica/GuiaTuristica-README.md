@@ -28,6 +28,76 @@
 
 ---
 
+## 🗂️ Entidades del Proyecto
+
+---
+
+### 🔹 User
+- **user_id**: number (PK)  
+- **name**: string  
+- **email**: string  
+- **password_hash**: string (bcrypt hash para contraseñas)  
+
+> Solo disponible para el admin
+
+---
+
+### 🔹 Province
+- **province_id**: number (PK)  
+- **name**: string  
+
+**Relaciones:**  
+- Contiene muchas **City** (1:N)
+
+---
+
+### 🔹 City
+- **city_id**: number (PK)  
+- **name**: string  
+- **province_id**: number (FK)  
+
+**Relaciones:**  
+- Pertenece a una **Province** (N:1)  
+- Ofrece muchas **Activity** (1:N)
+
+---
+
+### 🔹 Category
+- **category_id**: number (PK)  
+- **name**: string  
+- **description**: string  
+
+**Relaciones:**  
+- Clasifica muchas **Activity** (1:N)
+
+---
+
+### 🔹 Activity
+- **activity_id**: number (PK)  
+- **name**: string  
+- **description**: string  
+- **price**: number  
+- **discount**: number  
+- **location**: string  
+- **category_id**: number (FK)  
+- **city_id**: number (FK)  
+
+**Relaciones:**  
+- Pertenece a una **City** (N:1)  
+- Pertenece a una **Category** (N:1)  
+- Tiene muchas **Image** (1:N)
+
+---
+
+### 🔹 Image
+- **image_id**: number (PK)  
+- **url**: string  
+- **activity_id**: number (FK)  
+
+**Relaciones:**  
+- Pertenece a una **Activity** (N:1)
+
+
 ## Diagrama UML
 
 ![Diagrama UML](./backend//images/Diagra%20UML%20Guia%20Turistica.jpg)
