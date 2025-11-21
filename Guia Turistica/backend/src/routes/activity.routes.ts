@@ -111,11 +111,6 @@ GET /activities/sorted?sort=discountDesc
 GET /activities/sorted?sort=name 
 */
 
-// con el secuencial
-/* /activities/sorted?sort=city → Ordena por ciudad
-/activities/sorted?sort=city,name → Ordena primero por ciudad, y dentro de cada ciudad por nombre de actividad
-/activities/sorted?sort=discountDesc,priceAsc → Ordena primero por descuento descendente y, si hay empate, por precio ascendente */
-
 /**
  * @swagger
  * /api/activities/{id}:
@@ -158,12 +153,15 @@ GET /activities/sorted?sort=name
 router.get('/:id', validate(idParamSchema, 'params'), (req, res) =>
   ActivityController.getById(req, res),
 );
+
 /**
  * @swagger
  * /api/activities:
  *   post:
- *     summary: Crea una nueva actividad
+ *     summary: Crea una nueva actividad (necesita token, hacer login y poner el token en Authorize)
  *     tags: [Actividades]
+ *     security:
+ *       - bearerAuth: []       # <<--- Auth agregado
  *     requestBody:
  *       required: true
  *       content:
@@ -218,14 +216,22 @@ router.get('/:id', validate(idParamSchema, 'params'), (req, res) =>
  *                   example: Caminata guiada por los senderos del Parque Nacional Tierra del Fuego.
  *       400:
  *         description: Error en los datos de entrada
+ *       401:
+ *         description: Token inválido o ausente
  */
-router.post('/', validate(createActivitySchema), (req, res) => ActivityController.create(req, res));
+router.post('/', authenticateJWT, validate(createActivitySchema), (req, res) =>
+  ActivityController.create(req, res),
+);
+
+/**
 /**
  * @swagger
  * /api/activities/{id}:
  *   put:
- *     summary: Actualiza una actividad existente
+ *     summary: Actualiza una actividad existente (necesita token, hacer login y poner el token en Authorize)
  *     tags: [Actividades]
+ *     security:
+ *       - bearerAuth: []       # <<--- Auth agregado
  *     parameters:
  *       - in: path
  *         name: id
@@ -260,18 +266,27 @@ router.post('/', validate(createActivitySchema), (req, res) => ActivityControlle
  *         description: Actividad actualizada correctamente
  *       400:
  *         description: Error en los datos de entrada
+ *       401:
+ *         description: Token inválido o ausente
  *       404:
  *         description: Actividad no encontrada
  */
-router.put('/:id', validate(idParamSchema, 'params'), validate(updateActivitySchema), (req, res) =>
-  ActivityController.update(req, res),
+router.put(
+  '/:id',
+  authenticateJWT,
+  validate(idParamSchema, 'params'),
+  validate(updateActivitySchema),
+  (req, res) => ActivityController.update(req, res),
 );
+
 /**
  * @swagger
  * /api/activities/{id}:
  *   delete:
- *     summary: Elimina una actividad
+ *     summary: Elimina una actividad (necesita token, hacer login y poner el token en Authorize)
  *     tags: [Actividades]
+ *     security:
+ *       - bearerAuth: []       # <<--- Auth agregado
  *     parameters:
  *       - in: path
  *         name: id
@@ -282,10 +297,12 @@ router.put('/:id', validate(idParamSchema, 'params'), validate(updateActivitySch
  *     responses:
  *       204:
  *         description: Actividad eliminada correctamente
+ *       401:
+ *         description: Token inválido o ausente
  *       404:
  *         description: Actividad no encontrada
  */
-router.delete('/:id', validate(idParamSchema, 'params'), (req, res) =>
+router.delete('/:id', authenticateJWT, validate(idParamSchema, 'params'), (req, res) =>
   ActivityController.delete(req, res),
 );
 

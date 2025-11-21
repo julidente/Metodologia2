@@ -6,6 +6,7 @@ import ImageController from '../controllers/image.controller';
 import { validate } from '../middlewares/validate.middleware';
 import { createImageSchema, updateImageSchema } from '../schemas/image.schema';
 import { idParamSchema } from '../schemas/common.schema';
+import { authenticateJWT } from '../middlewares/auth.middleware';
 
 const router = Router();
 /**
@@ -42,6 +43,7 @@ const router = Router();
  *                     example: 5
  */
 router.get('/', (req, res) => ImageController.getAll(req, res));
+
 /**
  * @swagger
  * /api/images/{id}:
@@ -78,12 +80,15 @@ router.get('/', (req, res) => ImageController.getAll(req, res));
 router.get('/:id', validate(idParamSchema, 'params'), (req, res) =>
   ImageController.getById(req, res),
 );
+
 /**
  * @swagger
  * /api/images:
  *   post:
- *     summary: Crea una nueva imagen asociada a una actividad
+ *     summary: Crea una nueva imagen asociada a una actividad (necesita token, hacer login y poner el token en Authorize)
  *     tags: [Imágenes]
+ *     security:
+ *       - bearerAuth: []       # <<--- Auth agregado
  *     requestBody:
  *       required: true
  *       content:
@@ -119,14 +124,21 @@ router.get('/:id', validate(idParamSchema, 'params'), (req, res) =>
  *                   example: 4
  *       400:
  *         description: Error en los datos de entrada
+ *       401:
+ *         description: Token inválido o ausente
  */
-router.post('/', validate(createImageSchema), (req, res) => ImageController.create(req, res));
+router.post('/', authenticateJWT, validate(createImageSchema), (req, res) =>
+  ImageController.create(req, res),
+);
+
 /**
  * @swagger
  * /api/images/{id}:
  *   put:
- *     summary: Actualiza una imagen existente
+ *     summary: Actualiza una imagen existente (necesita token, hacer login y poner el token en Authorize)
  *     tags: [Imágenes]
+ *     security:
+ *       - bearerAuth: []       # <<--- Auth agregado
  *     parameters:
  *       - in: path
  *         name: id
@@ -152,18 +164,27 @@ router.post('/', validate(createImageSchema), (req, res) => ImageController.crea
  *         description: Imagen actualizada correctamente
  *       400:
  *         description: Error en los datos de entrada
+ *       401:
+ *         description: Token inválido o ausente
  *       404:
  *         description: Imagen no encontrada
  */
-router.put('/:id', validate(idParamSchema, 'params'), validate(updateImageSchema), (req, res) =>
-  ImageController.update(req, res),
+router.put(
+  '/:id',
+  authenticateJWT,
+  validate(idParamSchema, 'params'),
+  validate(updateImageSchema),
+  (req, res) => ImageController.update(req, res),
 );
+
 /**
  * @swagger
  * /api/images/{id}:
  *   delete:
- *     summary: Elimina una imagen
+ *     summary: Elimina una imagen (necesita token, hacer login y poner el token en Authorize)
  *     tags: [Imágenes]
+ *     security:
+ *       - bearerAuth: []       # <<--- Auth agregado
  *     parameters:
  *       - in: path
  *         name: id
@@ -182,10 +203,12 @@ router.put('/:id', validate(idParamSchema, 'params'), validate(updateImageSchema
  *                 message:
  *                   type: string
  *                   example: Imagen eliminada correctamente
+ *       401:
+ *         description: Token inválido o ausente
  *       404:
  *         description: Imagen no encontrada
  */
-router.delete('/:id', validate(idParamSchema, 'params'), (req, res) =>
+router.delete('/:id', authenticateJWT, validate(idParamSchema, 'params'), (req, res) =>
   ImageController.delete(req, res),
 );
 
