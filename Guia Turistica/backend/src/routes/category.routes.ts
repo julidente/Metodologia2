@@ -4,6 +4,7 @@ import CategoryController from '../controllers/category.controller';
 import { validate } from '../middlewares/validate.middleware';
 import { createCategorySchema, updateCategorySchema } from '../schemas/category.schema';
 import { idParamSchema } from '../schemas/common.schema';
+import { authenticateJWT } from '../middlewares/auth.middleware';
 
 const router = Router();
 /**
@@ -76,12 +77,15 @@ router.get('/', (req, res) => CategoryController.getAll(req, res));
 router.get('/:id', validate(idParamSchema, 'params'), (req, res) =>
   CategoryController.getById(req, res),
 );
+
 /**
  * @swagger
  * /api/categories:
  *   post:
- *     summary: Crea una nueva categoría
+ *     summary: Crea una nueva categoría (necesita token, hacer login y poner el token en Authorize)
  *     tags: [Categorías]
+ *     security:
+ *       - bearerAuth: []        # Requiere token JWT
  *     requestBody:
  *       required: true
  *       content:
@@ -93,10 +97,10 @@ router.get('/:id', validate(idParamSchema, 'params'), (req, res) =>
  *             properties:
  *               name:
  *                 type: string
- *                 example: Hogar
+ *                 example: Compras
  *               description:
  *                 type: string
- *                 example: Artículos para el hogar y decoración
+ *                 example: Centros comerciales, mercados locales y zonas de compras
  *     responses:
  *       201:
  *         description: Categoría creada exitosamente
@@ -105,25 +109,32 @@ router.get('/:id', validate(idParamSchema, 'params'), (req, res) =>
  *             schema:
  *               type: object
  *               properties:
- *                 id:
+ *                 category_id:
  *                   type: integer
- *                   example: 5
+ *                   example: 12
  *                 name:
  *                   type: string
- *                   example: Hogar
+ *                   example: Compras
  *                 description:
  *                   type: string
- *                   example: Artículos para el hogar y decoración
+ *                   example: Centros comerciales, mercados locales y zonas de compras
  *       400:
  *         description: Error en los datos de entrada
+ *       401:
+ *         description: Token inválido o ausente
  */
-router.post('/', validate(createCategorySchema), (req, res) => CategoryController.create(req, res));
+router.post('/', authenticateJWT, validate(createCategorySchema), (req, res) =>
+  CategoryController.create(req, res),
+);
+
 /**
  * @swagger
  * /api/categories/{id}:
  *   put:
- *     summary: Actualiza una categoría existente
+ *     summary: Actualiza una categoría existente (necesita token, hacer login y poner el token en Authorize)
  *     tags: [Categorías]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -147,20 +158,38 @@ router.post('/', validate(createCategorySchema), (req, res) => CategoryControlle
  *     responses:
  *       200:
  *         description: Categoría actualizada correctamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 category_id:
+ *                   type: integer
+ *                 name:
+ *                   type: string
+ *                 description:
+ *                   type: string
  *       400:
  *         description: Error en los datos de entrada
  *       404:
  *         description: Categoría no encontrada
  */
-router.put('/:id', validate(idParamSchema, 'params'), validate(updateCategorySchema), (req, res) =>
-  CategoryController.update(req, res),
+router.put(
+  '/:id',
+  authenticateJWT,
+  validate(idParamSchema, 'params'),
+  validate(updateCategorySchema),
+  (req, res) => CategoryController.update(req, res),
 );
+
 /**
  * @swagger
  * /api/categories/{id}:
  *   delete:
- *     summary: Elimina una categoría
+ *     summary: Elimina una categoría (necesita token, hacer login y poner el token en Authorize)
  *     tags: [Categorías]
+ *     security:
+ *       - bearerAuth: []       # <<--- Se agrega autenticación
  *     parameters:
  *       - in: path
  *         name: id
@@ -171,10 +200,12 @@ router.put('/:id', validate(idParamSchema, 'params'), validate(updateCategorySch
  *     responses:
  *       204:
  *         description: Categoría eliminada correctamente
+ *       401:
+ *         description: Token inválido o ausente
  *       404:
  *         description: Categoría no encontrada
  */
-router.delete('/:id', validate(idParamSchema, 'params'), (req, res) =>
+router.delete('/:id', authenticateJWT, validate(idParamSchema, 'params'), (req, res) =>
   CategoryController.delete(req, res),
 );
 

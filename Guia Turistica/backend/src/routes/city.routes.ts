@@ -4,6 +4,7 @@ import CityController from '../controllers/city.controller';
 import { validate } from '../middlewares/validate.middleware';
 import { createCitySchema, updateCitySchema } from '../schemas/city.schema';
 import { idParamSchema } from '../schemas/common.schema';
+import { authenticateJWT } from '../middlewares/auth.middleware';
 
 const router = Router();
 /**
@@ -77,12 +78,15 @@ router.get('/', (req, res) => CityController.getAll(req, res));
 router.get('/:id', validate(idParamSchema, 'params'), (req, res) =>
   CityController.getById(req, res),
 );
+
 /**
  * @swagger
  * /api/cities:
  *   post:
- *     summary: Crea una nueva ciudad
+ *     summary: Crea una nueva ciudad (necesita token, hacer login y poner el token en Authorize)
  *     tags: [Ciudades]
+ *     security:
+ *       - bearerAuth: []       # <<--- Auth agregado
  *     requestBody:
  *       required: true
  *       content:
@@ -118,14 +122,21 @@ router.get('/:id', validate(idParamSchema, 'params'), (req, res) =>
  *                   example: 5
  *       400:
  *         description: Error en los datos de entrada
+ *       401:
+ *         description: Token inválido o ausente
  */
-router.post('/', validate(createCitySchema), (req, res) => CityController.create(req, res));
+router.post('/', authenticateJWT, validate(createCitySchema), (req, res) =>
+  CityController.create(req, res),
+);
+
 /**
  * @swagger
  * /api/cities/{id}:
  *   put:
- *     summary: Actualiza una ciudad existente
+ *     summary: Actualiza una ciudad existente (necesita token, hacer login y poner el token en Authorize)
  *     tags: [Ciudades]
+ *     security:
+ *       - bearerAuth: []       # <<--- Auth agregado
  *     parameters:
  *       - in: path
  *         name: id
@@ -151,18 +162,27 @@ router.post('/', validate(createCitySchema), (req, res) => CityController.create
  *         description: Ciudad actualizada correctamente
  *       400:
  *         description: Error en los datos de entrada
+ *       401:
+ *         description: Token inválido o ausente
  *       404:
  *         description: Ciudad no encontrada
  */
-router.put('/:id', validate(idParamSchema, 'params'), validate(updateCitySchema), (req, res) =>
-  CityController.update(req, res),
+router.put(
+  '/:id',
+  authenticateJWT,
+  validate(idParamSchema, 'params'),
+  validate(updateCitySchema),
+  (req, res) => CityController.update(req, res),
 );
+
 /**
  * @swagger
  * /api/cities/{id}:
  *   delete:
- *     summary: Elimina una ciudad
+ *     summary: Elimina una ciudad (necesita token, hacer login y poner el token en Authorize)
  *     tags: [Ciudades]
+ *     security:
+ *       - bearerAuth: []       # <<--- Auth agregado
  *     parameters:
  *       - in: path
  *         name: id
@@ -173,10 +193,12 @@ router.put('/:id', validate(idParamSchema, 'params'), validate(updateCitySchema)
  *     responses:
  *       204:
  *         description: Ciudad eliminada correctamente
+ *       401:
+ *         description: Token inválido o ausente
  *       404:
  *         description: Ciudad no encontrada
  */
-router.delete('/:id', validate(idParamSchema, 'params'), (req, res) =>
+router.delete('/:id', authenticateJWT, validate(idParamSchema, 'params'), (req, res) =>
   CityController.delete(req, res),
 );
 
