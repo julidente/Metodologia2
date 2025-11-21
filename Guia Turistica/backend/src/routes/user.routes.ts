@@ -17,21 +17,40 @@ const router = Router();
  * @swagger
  * /api/users:
  *   get:
- *     summary: Obtiene todos los usuarios
+ *     summary: Obtiene todos los usuarios (necesita token, hacer login y poner el token en Authorize)
  *     tags: [Usuarios]
+ *     security:
+ *       - bearerAuth: []       # <<--- Auth agregado
  *     responses:
  *       200:
  *         description: Lista de usuarios
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                   name:
+ *                     type: string
+ *                   email:
+ *                     type: string
+ *       401:
+ *         description: Token inválido o ausente
  */
 // Rutas de usuario (solo admin)
-router.get('/', (req, res) => UserController.getAll(req, res));
+router.get('/', authenticateJWT, (req, res) => UserController.getAll(req, res));
 
 /**
  * @swagger
  * /api/users/{id}:
  *   get:
- *     summary: Obtiene un usuario por ID
+ *     summary: Obtiene un usuario por ID (necesita token, hacer login y poner el token en Authorize)
  *     tags: [Usuarios]
+ *     security:
+ *       - bearerAuth: []       # <<--- Auth agregado
  *     parameters:
  *       - in: path
  *         name: id
@@ -51,10 +70,14 @@ router.get('/', (req, res) => UserController.getAll(req, res));
  *                   type: integer
  *                 name:
  *                   type: string
+ *                 email:
+ *                   type: string
+ *       401:
+ *         description: Token inválido o ausente
  *       404:
  *         description: Usuario no encontrado
  */
-router.get('/:id', validate(idParamSchema, 'params'), (req, res) =>
+router.get('/:id', authenticateJWT, validate(idParamSchema, 'params'), (req, res) =>
   UserController.getById(req, res),
 );
 
@@ -62,8 +85,10 @@ router.get('/:id', validate(idParamSchema, 'params'), (req, res) =>
  * @swagger
  * /api/users:
  *   post:
- *     summary: Crea un nuevo usuario
+ *     summary: Crea un nuevo usuario (necesita token, hacer login y poner el token en Authorize)
  *     tags: [Usuarios]
+ *     security:
+ *       - bearerAuth: []       # <<--- Auth agregado
  *     requestBody:
  *       required: true
  *       content:
@@ -103,44 +128,21 @@ router.get('/:id', validate(idParamSchema, 'params'), (req, res) =>
  *                   example: juan@example.com
  *       400:
  *         description: Error en los datos de entrada
+ *       401:
+ *         description: Token inválido o ausente
  */
-router.post('/', validate(userInputSchema), (req, res) => UserController.create(req, res));
-
-/**
- * @swagger
- * /api/users:
- *   post:
- *     summary: Crea un nuevo usuario
- *     tags: [Usuarios]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               name:
- *                 type: string
- *               email:
- *                 type: string
- *               password:
- *                 type: string
- *     responses:
- *       201:
- *         description: Usuario creado exitosamente
- *       400:
- *         description: Error en los datos de entrada
- */
-//router.post('/', validate(userInputSchema), (req, res) => UserController.create(req, res));
+router.post('/', authenticateJWT, validate(userInputSchema), (req, res) =>
+  UserController.create(req, res),
+);
 
 /**
  * @swagger
  * /api/users/{id}:
  *   put:
- *     summary: Actualiza un usuario existente (necesita token hacer login y poner el token en Authorize)
+ *     summary: Actualiza un usuario existente (necesita token, hacer login y poner el token en Authorize)
  *     tags: [Usuarios]
  *     security:
- *       - bearerAuth: []
+ *       - bearerAuth: []       # <<--- Auth agregado
  *     parameters:
  *       - in: path
  *         name: id
@@ -175,6 +177,8 @@ router.post('/', validate(userInputSchema), (req, res) => UserController.create(
  *                   type: string
  *       400:
  *         description: Error en los datos de entrada
+ *       401:
+ *         description: Token inválido o ausente
  *       404:
  *         description: Usuario no encontrado
  */
@@ -185,14 +189,15 @@ router.put(
   validate(userUpdateSchema),
   (req, res) => UserController.update(req, res),
 );
+
 /**
  * @swagger
  * /api/users/{id}:
  *   delete:
- *     summary: Elimina un usuario (necesita token hacer login y poner el token en Authorize)
+ *     summary: Elimina un usuario (necesita token, hacer login y poner el token en Authorize)
  *     tags: [Usuarios]
  *     security:
- *       - bearerAuth: []
+ *       - bearerAuth: []       # <<--- Auth agregado
  *     parameters:
  *       - in: path
  *         name: id
@@ -211,6 +216,8 @@ router.put(
  *                 message:
  *                   type: string
  *                   example: Usuario eliminado correctamente
+ *       401:
+ *         description: Token inválido o ausente
  *       404:
  *         description: Usuario no encontrado
  */
