@@ -26,6 +26,8 @@
 | **Proxy** | Nginx | 80 | Reverse proxy |
 | **pgAdmin** | pgAdmin 4 | 5050 | Administración de BD |
 
+Para ver las rutas con swagger: http://localhost:3001/api-docs/
+
 ---
 
 ## 🗂️ Entidades del Proyecto

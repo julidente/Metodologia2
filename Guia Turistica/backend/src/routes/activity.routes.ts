@@ -224,7 +224,6 @@ router.post('/', authenticateJWT, validate(createActivitySchema), (req, res) =>
 );
 
 /**
-/**
  * @swagger
  * /api/activities/{id}:
  *   put:
