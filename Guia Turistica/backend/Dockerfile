@@ -20,6 +20,8 @@ COPY --from=builder /app/package*.json ./
 RUN npm install --only=production
 
 COPY --from=builder /app/dist ./dist
+# agregar esta línea
+COPY --from=builder /app/public ./public   
 
 EXPOSE 3001
 

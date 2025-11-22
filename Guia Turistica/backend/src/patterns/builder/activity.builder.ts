@@ -71,6 +71,7 @@ import { CreateActivityDTO } from '../../dtos/activity.dto';
 
 export class ActivityBuilder {
   private data: Partial<CreateActivityDTO> = {};
+  private image_url?: string; // campo opcional para la imagen
 
   setName(name: string) {
     this.data.name = name;
@@ -105,6 +106,16 @@ export class ActivityBuilder {
   setCategoryId(category_id: number) {
     this.data.category_id = category_id;
     return this;
+  }
+
+  setImage(url: string) {
+    this.image_url = url;
+    return this;
+  }
+
+  getImageUrl(): string {
+    // Si no se setea imagen, devuelve placeholder por defecto
+    return this.image_url || '/images/activities/placeholder.jpeg';
   }
 
   /**

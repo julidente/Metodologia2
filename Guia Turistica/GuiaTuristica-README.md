@@ -474,7 +474,7 @@ docker exec -it guia_db psql -U postgres -d guia_turistica
 #mostrar tablas
 \dt  
 
- select * "nombre de la tabla"; #para ver contenido
+select * from "nombre de la tabla"; #para ver contenido
 
 \q #para salir
 ```
