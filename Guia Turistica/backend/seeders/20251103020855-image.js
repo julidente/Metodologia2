@@ -96,7 +96,7 @@ module.exports = {
     const images = [
       { url: '/images/activities/Bariloche-Cerveceria.jpeg', activity: 'Tour cervecero artesanal' },
       {
-        url: '/images/activities/Caba- CentroHistorico.jpeg',
+        url: '/images/activities/Caba-CentroHistorico.jpeg',
         activity: 'Tour histórico por el Casco Antiguo',
       },
       { url: '/images/activities/Caba-CenaTango.jpeg', activity: 'Cena show de tango' },
@@ -105,7 +105,7 @@ module.exports = {
         activity: 'Excursión al Glaciar Perito Moreno',
       },
       {
-        url: '/images/activities/Cayafate- Trekking.jpeg',
+        url: '/images/activities/Cayafate-Trekking.jpeg',
         activity: 'Trekking por los Valles Calchaquíes',
       },
       {

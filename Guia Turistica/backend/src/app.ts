@@ -1,6 +1,7 @@
 // src/app.ts
 
 import express from 'express';
+import path from 'path';
 import cors from 'cors';
 import cityRoutes from './routes/city.routes';
 import provinceRoutes from './routes/province.routes';
@@ -18,6 +19,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Servir carpeta de imágenes
+//app.use('/images', express.static(path.join(__dirname, 'public/images')));
+
+// Servir imágenes estáticas desde public/images
+app.use('/images', express.static(path.join(__dirname, '../public/images')));
 
 // ✅ Swagger UI
 setupSwagger(app);

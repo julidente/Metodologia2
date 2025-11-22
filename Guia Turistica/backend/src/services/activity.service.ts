@@ -10,6 +10,8 @@ import { Activity } from '../models/entity/activity.entity';
 
 import { strategyMap } from '../patterns/strategy/strategy.mapper';
 
+import imageRepository from '../repositories/image.repository';
+
 //import { ISortStrategy } from '../patterns/strategy/sortStrategy.interface';
 //import {SortByMultiple} from '../patterns/strategy/sortByMultiple.strategy';
 
@@ -88,7 +90,7 @@ export class ActivityService {
   } */
 
   //crear con un builder
-  async create(data: CreateActivityDTO) {
+  /* async create(data: CreateActivityDTO) {
     // Construimos la actividad con el Builder
     const builder = new ActivityBuilder()
       .setName(data.name)
@@ -105,6 +107,37 @@ export class ActivityService {
 
     // Creamos en DB
     return await activityRepository.create(activityData);
+  } */
+
+  // crear con un builder (tiene imagenes)
+  async create(data: CreateActivityDTO) {
+    const builder = new ActivityBuilder()
+      .setName(data.name)
+      .setPrice(data.price)
+      .setLocation(data.location)
+      .setCityId(data.city_id)
+      .setCategoryId(data.category_id);
+
+    if (data.description) builder.setDescription(data.description);
+    if (data.discount !== undefined) builder.setDiscount(data.discount);
+
+    // Setear imagen si viene en el POST
+    if ((data as any).image_url) {
+      builder.setImage((data as any).image_url);
+    }
+
+    const activityData = builder.build();
+
+    // Crear la actividad
+    const activity = await activityRepository.create(activityData);
+
+    // Crear la imagen asociada (si no hay, usa placeholder)
+    await imageRepository.create({
+      url: builder.getImageUrl(),
+      activity_id: activity.activity_id,
+    });
+
+    return activity;
   }
 
   async update(activity_id: number, data: any) {
