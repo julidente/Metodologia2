@@ -185,6 +185,35 @@ select * from "nombre de la tabla"; #para ver contenido
 - **typescript**: Lenguaje de tipado estático que mejora la robustez del backend.  
 - **jest**: Framework para realizar pruebas unitarias y de integración.
 
+## Patrones utilizados:
+
+### Builder Pattern
+Aplicación: Creación de actividades turísticas
+
+Este patrón es ideal para la creación de objetos complejos paso a paso, como las actividades turísticas, que pueden tener múltiples propiedades opcionales (descripción, imágenes, precio, descuentos, etc.). 
+
+Permite construir instancias de manera flexible y clara, evitando constructores con demasiados parámetros.
+
+### Singleton Pattern
+Aplicación: Conexión a la base de datos PostgreSQL
+
+Se utilizará este patrón para garantizar que exista una única instancia de la conexión a la base de datos durante toda la ejecución del servidor. 
+Esto mejora el rendimiento, evita múltiples conexiones innecesarias y asegura consistencia en las operaciones de acceso a datos.
+
+### Strategy Pattern
+
+Aplicación: Ordenamiento flexible de actividades
+
+El sistema permitirá a los usuarios ordenar actividades según diferentes criterios:
+- Categoria (A - Z)
+- Ciudad (A - Z)
+- Provincia (A - Z)
+- Nombre Actividad (A - Z)
+- Descuentos Asc / Desc
+- Precio Asc / Desc
+
+El strategy es solo un criterio por vez, no permite multiples criterios sequenciales
+
 ## Estructura de Carpetas (falta frontend)
 
 ```bash
