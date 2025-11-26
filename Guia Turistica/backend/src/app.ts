@@ -11,7 +11,7 @@ import userRoutes from './routes/user.routes';
 import imagesRoutes from './routes/image.routes';
 import authRoutes from './routes/auth.routes';
 
-import { setupSwagger } from '../src/config/swagger'; // ✅ IMPORTANTE
+import { setupSwagger } from '../src/config/swagger'; // IMPORTANTE para usar swagger
 //import errorMiddleware from './middlewares/error.middleware.js';
 
 const app = express();
@@ -20,13 +20,10 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Servir carpeta de imágenes
-//app.use('/images', express.static(path.join(__dirname, 'public/images')));
-
 // Servir imágenes estáticas desde public/images
 app.use('/images', express.static(path.join(__dirname, '../public/images')));
 
-// ✅ Swagger UI
+// Swagger UI
 setupSwagger(app);
 
 //app.use('/api/users', userRoutes);

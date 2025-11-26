@@ -70,6 +70,9 @@ router.get('/', (req, res) => ProvinceController.getAll(req, res));
 router.get('/:id', validate(idParamSchema, 'params'), (req, res) =>
   ProvinceController.getById(req, res),
 );
+
+// Como son solo para argentina, no es necesario el post, put o delete
+
 // /**
 //  * @swagger
 //  * /api/provinces:

@@ -1,27 +1,3 @@
-// temporal para que no de error en activity
-// src/models/entity/image.entity.ts
-/* import { Model, DataTypes } from "sequelize";
-import { sequelize } from "../../config/database.config";
-
-export class Image extends Model {
-  public image_id!: number;
-  public url!: string;
-  public activity_id!: number;
-}
-
-Image.init(
-  {
-    image_id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    url: { type: DataTypes.STRING, allowNull: false },
-    activity_id: { type: DataTypes.INTEGER, allowNull: false },
-  },
-  {
-    sequelize,
-    tableName: "Images",
-    timestamps: true,
-  }
-); */
-
 // src/models/entity/image.entity.ts
 import { Model, DataTypes, Optional } from 'sequelize';
 import { sequelize } from '../../config/database.config';

@@ -5,7 +5,6 @@ import { ActivityBuilder } from '../patterns/builder/activity.builder';
 import { CreateActivityDTO } from '../dtos/activity.dto';
 
 // para usar el strategy
-//import * as Strategies from "../patterns/strategy/indexStrategy"; // importa todas las strategies desde el index
 import { Activity } from '../models/entity/activity.entity';
 
 import { strategyMap } from '../patterns/strategy/strategy.mapper';
@@ -19,32 +18,6 @@ export class ActivityService {
   async getAll() {
     return await activityRepository.getAll();
   }
-
-  // sin el mapper aparte
-
-  // async getAllSorted(sortKey?: string): Promise<Activity[]> {
-  //   const activities = await activityRepository.getAll();
-
-  //   if (!sortKey) return activities;
-
-  //   // mapper dinámico
-  //   const strategyMap: Record<string, any> = {
-  //     priceAsc: Strategies.SortByPriceAsc,
-  //     priceDesc: Strategies.SortByPriceDesc,
-  //     discountAsc: Strategies.SortByDiscountAsc,
-  //     discountDesc: Strategies.SortByDiscountDesc,
-  //     name: Strategies.SortByName,
-  //     city: Strategies.SortByCity,
-  //     province: Strategies.SortByProvince,
-  //     category: Strategies.SortByCategory,
-  //   };
-
-  //   const StrategyClass = strategyMap[sortKey];
-  //   if (!StrategyClass) return activities; // si no existe la strategy, devolvemos sin ordenar
-
-  //   const strategy = new StrategyClass();
-  //   return strategy.sort(activities);
-  // }
 
   // con el mapper aparte, sin combinaciones (sin sort secuencial)
 
@@ -83,11 +56,6 @@ export class ActivityService {
     if (!activity) throw new Error('Actividad no encontrada');
     return activity;
   }
-
-  /* async create(data: any) {
-    // Zod ya valida campos obligatorios
-    return await activityRepository.create(data);
-  } */
 
   //crear con un builder
   /* async create(data: CreateActivityDTO) {
