@@ -1,5 +1,7 @@
 // src/config/cloudinary.ts
-import { v2 as cloudinary } from 'cloudinary';
+// Se termino por hacer en una carpeta public en el backend
+
+/* import { v2 as cloudinary } from 'cloudinary';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -10,4 +12,4 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET || '',
 });
 
-export default cloudinary;
+export default cloudinary; */

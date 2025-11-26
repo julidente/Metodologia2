@@ -1,4 +1,6 @@
-import { Response } from 'express';
+// Seusara desde carpeta public en el proyecto
+
+/* import { Response } from 'express';
 import cloudinary from '../config/cloudinary';
 import fs from 'fs';
 import { MulterRequest } from '../dtos/multeRequest.dto';
@@ -16,4 +18,4 @@ export const uploadImage = async (req: MulterRequest, res: Response) => {
     console.error(error);
     return res.status(500).json({ error });
   }
-};
+}; */

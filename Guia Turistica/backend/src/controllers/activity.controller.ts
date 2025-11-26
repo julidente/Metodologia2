@@ -25,7 +25,7 @@ class ActivityController {
     }
   }
 
-  // con sort secuencial
+  // con sort secuencial (se sobreescriben causa errores)
   // async getAllSorted(req: Request, res: Response) {
   //   try {
   //     // Recibe múltiples criterios separados por coma

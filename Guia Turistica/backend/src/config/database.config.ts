@@ -1,27 +1,4 @@
 // src/config/database.config.ts
-/* import { Sequelize } from "sequelize";
-import env from "./env.config";
-
-export const sequelize = new Sequelize({
-  database: env.DB_NAME,
-  username: env.DB_USER,
-  password: env.DB_PASSWORD,
-  host: env.DB_HOST,
-  port: Number(env.DB_PORT),
-  dialect: "postgres",
-  logging: false,
-});
-
-export const connectDB = async () => {
-  try {
-    await sequelize.authenticate();
-    console.log('✅ Conexión a PostgreSQL establecida correctamente.');
-  } catch (error) {
-    console.error('❌ Error al conectar con la base de datos:', error);
-  }
-}; */
-
-// src/config/database.config.ts
 import { Sequelize } from 'sequelize';
 import env from './env.config';
 
