@@ -5,7 +5,7 @@
 ┌─────────────┐    ┌─────────────┐    ┌─────────────┐
 │   Nginx     │    │   React     │    │   Express   │
 │  (Proxy)    │◄──►│ (Frontend)  │◄──►│  (Backend)  │
-│   :80       │    │   :3000     │    │   :3001     │
+│   :80       │    │   :5137     │    │   :3001     │
 └─────────────┘    └─────────────┘    └─────────────┘
                                               │
                    ┌─────────────┐    ┌─────────────┐
@@ -19,7 +19,7 @@
 
 | Servicio | Tecnología | Puerto | Función |
 |----------|------------|--------|---------|
-| **Frontend** | React 18 | 3000 | Interfaz de usuario |
+| **Frontend** | Vite | 5137 | Interfaz de usuario |
 | **Backend** | Express + Sequelize | 3001 | API REST |
 | **Database** | PostgreSQL 15 | 5432 | Base de datos principal |
 | **Cache** | Redis 7 | 6379 | Cache y sesiones |
