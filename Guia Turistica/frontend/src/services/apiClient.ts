@@ -1,3 +1,4 @@
+// frontend/src/services/apiClient
 import { getStoredToken } from "./authStorage";
 
 const API_URL = import.meta.env.VITE_API_URL;

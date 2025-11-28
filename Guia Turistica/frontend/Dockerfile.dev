@@ -1,35 +1,25 @@
-# frontend/Dockerfile.dev
+# Dockerfile.dev
 FROM node:18-alpine
+
+# Evita errores de permisos cuando npm genera node_modules
+RUN mkdir -p /app && chown -R node:node /app
 
 WORKDIR /app
 
-# Copiar package.json primero para aprovechar cache de Docker
-COPY package*.json ./
+# Usamos usuario node para evitar permisos root en node_modules
+USER node
 
-# Instalar dependencias
+# Copiamos package.json primero para aprovechar el caching
+COPY --chown=node:node package*.json ./
+
 RUN npm install
 
-# Copiar el código fuente
-COPY . .
+# Luego copiamos el resto del código
+COPY --chown=node:node . .
 
-# Exponer puerto para Vite
-EXPOSE 3000
+# Vite necesita exponer WebSocket además del puerto normal
+EXPOSE 5137 5137/udp
 
-# Comando de desarrollo (Vite hot reload incluido)
-CMD ["npm", "run", "dev"]
+# Arrancamos Vite correctamente
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0", "--port", "5137"]
 
-#Sí, ese Dockerfile.dev para frontend con Vite está correcto. Algunos puntos clave que confirman que va a funcionar bien:
-
-#Hot reload:
-#Vite ya incluye hot reload por defecto cuando ejecutás npm run dev. No hace falta CHOKIDAR_USEPOLLING ni FAST_REFRESH como en CRA.
-
-#Cache de Docker:
-#Copiar primero package*.json y luego instalar dependencias permite aprovechar cache si solo cambiás código.
-
-#Exposición de puerto:
-#EXPOSE 3000 es correcto, que es donde Vite sirve el frontend por defecto.
-
-#Código fuente:
-#COPY . . copia todo el proyecto después de instalar dependencias, así los cambios locales se reflejan correctamente si usás volúmenes en docker-compose.
-
-#✅ Este Dockerfile.dev está listo para desarrollo con Vite + React + TypeScript.

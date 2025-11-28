@@ -37,7 +37,11 @@ const ActivityDetail = () => {
     );
   }
 
-  const cover = activity.images && activity.images.length > 0 ? activity.images[0].url : null;
+  //const cover = activity.images && activity.images.length > 0 ? activity.images[0].url : null;
+  const cover =
+  activity.images && activity.images.length > 0
+    ? `${import.meta.env.VITE_BACKEND_URL}${activity.images[0].url}`
+    : null;
   const cityName = activity.city?.name ?? activity.location;
   const provinceName = activity.city?.province?.name;
   const categoryName = activity.category?.name;

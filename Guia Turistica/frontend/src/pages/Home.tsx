@@ -70,17 +70,17 @@ const Home = () => {
   const visibleActivities = !normalizedSearch
     ? activities
     : activities.filter((a) => {
-        const name = a.name?.toLowerCase() ?? "";
-        const city = a.city?.name?.toLowerCase() ?? "";
-        const province = a.city?.province?.name?.toLowerCase() ?? "";
-        const category = a.category?.name?.toLowerCase() ?? "";
-        return (
-          name.includes(normalizedSearch) ||
-          city.includes(normalizedSearch) ||
-          province.includes(normalizedSearch) ||
-          category.includes(normalizedSearch)
-        );
-      });
+      const name = a.name?.toLowerCase() ?? "";
+      const city = a.city?.name?.toLowerCase() ?? "";
+      const province = a.city?.province?.name?.toLowerCase() ?? "";
+      const category = a.category?.name?.toLowerCase() ?? "";
+      return (
+        name.includes(normalizedSearch) ||
+        city.includes(normalizedSearch) ||
+        province.includes(normalizedSearch) ||
+        category.includes(normalizedSearch)
+      );
+    });
 
   return (
     <div>
@@ -240,8 +240,12 @@ const Home = () => {
             }}
           >
             {visibleActivities.map((a) => {
+              // const cover =
+              //   a.images && a.images.length > 0 ? a.images[0].url : null;
               const cover =
-                a.images && a.images.length > 0 ? a.images[0].url : null;
+                a.images && a.images.length > 0
+                  ? `${import.meta.env.VITE_BACKEND_URL}${a.images[0].url}`
+                  : null;
               const cityName = a.city?.name ?? a.location;
               const provinceName = a.city?.province?.name;
               return (
