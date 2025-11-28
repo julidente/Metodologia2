@@ -115,6 +115,7 @@ Se pasara las .env al mail
 Se pasara las .env.test al mail
 
 ### 3. Agregar un .env en la carpeta de frontend
+
 Se pasara las .env al mail
 
 ### 4. Levantar los Contenedores con Docker
@@ -136,9 +137,20 @@ vamos al backend con cd  y luego:
 npm install
 ```
 
-para ver si el backend funciona correctamente hacemos un log
+Agregamos las dependencias en el frontend:
+vamos al frontend con cd  y luego:
+```bash
+npm install
+```
+
+para ver si el backend funciona correctamente hacemos un log:
 ```bash
 docker-compose logs backend
+```
+
+para ver si el frontend funciona correctamente hacemos un log:
+```bash
+docker-compose logs frontend
 ```
 
 ### 5. Preparar las bases de datos 
@@ -162,9 +174,11 @@ docker exec -it guia_db psql -U postgres -d guia_turistica
 #mostrar tablas
 \dt  
 
-select * from "nombre de la tabla"; #para ver contenido
+#para ver contenido
+select * from "nombre de la tabla"; 
 
-\q #para salir
+#para salir
+\q 
 ```
 
 ## Dependencias
@@ -215,7 +229,7 @@ El sistema permitirá a los usuarios ordenar actividades según diferentes crite
 - Descuentos Asc / Desc
 - Precio Asc / Desc
 
-El strategy es solo un criterio por vez, no permite multiples criterios sequenciales
+El strategy es solo un criterio por vez, NO permite multiples criterios sequenciales
 
 ## Estructura de Carpetas (falta frontend)
 
