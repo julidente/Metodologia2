@@ -1,0 +1,26 @@
+// src/models/entity/image.entity.ts
+import { Model, DataTypes, Optional } from 'sequelize';
+import { sequelize } from '../../config/database.config';
+import { IImage } from '../image.model';
+
+// Campos opcionales al crear
+interface ImageCreationAttributes extends Optional<IImage, 'image_id'> {}
+
+export class Image extends Model<IImage, ImageCreationAttributes> implements IImage {
+  public image_id!: number;
+  public url!: string;
+  public activity_id!: number;
+}
+
+Image.init(
+  {
+    image_id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    url: { type: DataTypes.STRING, allowNull: false },
+    activity_id: { type: DataTypes.INTEGER, allowNull: false },
+  },
+  {
+    sequelize,
+    tableName: 'Images',
+    timestamps: true,
+  },
+);
