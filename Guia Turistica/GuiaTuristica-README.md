@@ -114,7 +114,10 @@ Se pasara las .env al mail
 
 Se pasara las .env.test al mail
 
-### 3. Levantar los Contenedores con Docker
+### 3. Agregar un .env en la carpeta de frontend
+Se pasara las .env al mail
+
+### 4. Levantar los Contenedores con Docker
 
 Entrar en la carpeta con el .yml:
 ```bash
@@ -138,7 +141,7 @@ para ver si el backend funciona correctamente hacemos un log
 docker-compose logs backend
 ```
 
-### 4. Preparar las bases de datos 
+### 5. Preparar las bases de datos 
 Luego, ingresar al contenedor del backend para ejecutar las migraciones y los seeders:
 
 ```bash
@@ -150,7 +153,7 @@ npx sequelize-cli db:seed:all
 exit
 ```
 
-### 5. Revisar contenido de la base de datos
+### 6. Revisar contenido de la base de datos
 Si uno quiere ingresar para ver las tablas de la base de datos:
 ```bash
 docker exec -it guia_db psql -U postgres -d guia_turistica
